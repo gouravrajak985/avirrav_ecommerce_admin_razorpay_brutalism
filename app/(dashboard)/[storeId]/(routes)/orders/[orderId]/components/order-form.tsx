@@ -178,6 +178,26 @@ export const OrderForm: React.FC<OrderFormProps> = ({
     defaultValues: getInitialValues()
   });
 
+  // Watch isPaid value and update payment status accordingly
+  useEffect(() => {
+    const isPaid = form.watch('isPaid');
+    if (!isPaid && form.getValues('paymentStatus') === 'paid') {
+      form.setValue('paymentStatus', 'pending');
+    } else if (isPaid && form.getValues('paymentStatus') === 'pending') {
+      form.setValue('paymentStatus', 'paid');
+    }
+  }, [form.watch('isPaid')]);
+
+  // Watch payment status and update isPaid accordingly
+  useEffect(() => {
+    const paymentStatus = form.watch('paymentStatus');
+    if (paymentStatus === 'paid') {
+      form.setValue('isPaid', true);
+    } else if (paymentStatus === 'pending') {
+      form.setValue('isPaid', false);
+    }
+  }, [form.watch('paymentStatus')]);
+
   // Calculate total price based on selected products and quantities
   const calculateTotalPrice = () => {
     const selectedProducts = form.watch('productIds');
@@ -189,16 +209,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({
       return total + (product ? Number(product.price) * quantity : 0);
     }, 0);
   };
-
-  // Update payment status when total price changes
-  useEffect(() => {
-    const paymentStatus = form.watch('paymentStatus');
-    if (paymentStatus === 'paid') {
-      form.setValue('isPaid', true);
-    } else {
-      form.setValue('isPaid', false);
-    }
-  }, [form.watch('paymentStatus')]);
 
   // Handle customer selection
   const handleCustomerSelect = (customerId: string) => {
@@ -628,12 +638,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                   <FormLabel>Payment Status</FormLabel>
                   <Select
                     disabled={loading}
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      if (value === 'paid') {
-                        form.setValue('isPaid', true);
-                      }
-                    }}
+                    onValueChange={field.onChange}
                     value={field.value}
                     defaultValue={field.value}
                   >
