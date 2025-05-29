@@ -24,11 +24,22 @@ export async function POST(
       return new NextResponse("Webhook signature missing", { status: 400 });
     }
 
+    // Get store details including Razorpay secret
+    const store = await prismadb.store.findFirst({
+      where: {
+        id: params.storeId
+      }
+    });
+    console.log(store)
+    if (!store || !store.razorpayKeySecret) {
+      return new NextResponse("Store Razorpay credentials not found", { status: 400 });
+    }
+
     // Verify signature
     const payload = `${razorpay_order_id}|${razorpay_payment_id}`;
     
     const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+      .createHmac("sha256", store.razorpayKeySecret)
       .update(payload)
       .digest("hex");
 
