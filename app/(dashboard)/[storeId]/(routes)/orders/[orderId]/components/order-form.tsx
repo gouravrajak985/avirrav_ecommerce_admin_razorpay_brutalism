@@ -179,24 +179,24 @@ export const OrderForm: React.FC<OrderFormProps> = ({
   });
 
   // Watch isPaid value and update payment status accordingly
+  const isPaid = form.watch('isPaid');
   useEffect(() => {
-    const isPaid = form.watch('isPaid');
     if (!isPaid && form.getValues('paymentStatus') === 'paid') {
       form.setValue('paymentStatus', 'pending');
     } else if (isPaid && form.getValues('paymentStatus') === 'pending') {
       form.setValue('paymentStatus', 'paid');
     }
-  }, [form.watch('isPaid')]);
+  }, [isPaid, form]);
 
   // Watch payment status and update isPaid accordingly
+  const paymentStatus = form.watch('paymentStatus');
   useEffect(() => {
-    const paymentStatus = form.watch('paymentStatus');
     if (paymentStatus === 'paid') {
       form.setValue('isPaid', true);
     } else if (paymentStatus === 'pending') {
       form.setValue('isPaid', false);
     }
-  }, [form.watch('paymentStatus')]);
+  }, [paymentStatus, form]);
 
   // Calculate total price based on selected products and quantities
   const calculateTotalPrice = () => {

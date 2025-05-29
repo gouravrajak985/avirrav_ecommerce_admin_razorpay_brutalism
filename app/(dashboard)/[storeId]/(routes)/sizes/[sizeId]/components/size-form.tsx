@@ -126,7 +126,7 @@ export const SizeForm = ({ initialData }: SizeFormProps) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormDescription>
-                    Enter a display name for this size (e.g., "Small", "Medium", "Large").
+                    Enter a display name for this size (e.g., &quot;Small&quot;, &quot;Medium&quot;, &quot;Large&quot;).
                   </FormDescription>
                   <FormControl>
                     <Input
@@ -146,7 +146,7 @@ export const SizeForm = ({ initialData }: SizeFormProps) => {
                 <FormItem>
                   <FormLabel>Value</FormLabel>
                   <FormDescription>
-                    Enter the actual size value (e.g., "S", "M", "L" or specific measurements).
+                    Enter the actual size value (e.g., &quot;S&quot;, &quot;M&quot;, &quot;L&quot; or specific measurements).
                   </FormDescription>
                   <FormControl>
                     <Input

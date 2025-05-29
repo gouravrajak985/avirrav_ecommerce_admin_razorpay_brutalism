@@ -1,4 +1,5 @@
 import { SignIn } from '@clerk/nextjs';
+import Image from 'next/image';
 
 export default function SignInPage() {
   return (
@@ -40,7 +41,13 @@ export default function SignInPage() {
       <div className="hidden md:flex w-1/2 items-center justify-center p-8">
         <div className="max-w-lg w-full">
           <div className="max-w-lg w-full">
-            <img src="/auth.svg" alt="Bold UI Illustration" className="w-full h-auto" />
+            <Image 
+              src="/auth.svg" 
+              alt="Bold UI Illustration" 
+              width={500}
+              height={500}
+              className="w-full h-auto" 
+            />
           </div>
         </div>
       </div>

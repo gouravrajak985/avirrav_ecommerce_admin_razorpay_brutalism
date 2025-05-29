@@ -589,7 +589,7 @@ export const ProductForm = ({
                     <FormItem>
                       <FormLabel>Weight Unit</FormLabel>
                       <FormDescription>
-                        Choose the unit of measurement for the product's weight.
+                        Choose the unit of measurement for the product&apos;s weight.
                       </FormDescription>
                       <Select
                         disabled={loading}
@@ -621,7 +621,7 @@ export const ProductForm = ({
                     <FormItem>
                       <FormLabel>Weight</FormLabel>
                       <FormDescription>
-                        Enter the product's weight for shipping calculations.
+                        Enter the product&apos;s weight for shipping calculations.
                       </FormDescription>
                       <FormControl>
                         <Input

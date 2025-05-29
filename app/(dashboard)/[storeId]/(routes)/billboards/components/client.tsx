@@ -37,7 +37,7 @@ export const BillboardClient = ({ data }: BillboardClientProps) => {
       <Alert className="mb-4">
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
-          You can't delete billboard while it's still in use. Remove it from all assigned locations first.
+          You can&apos;t delete billboard while it&apos;s still in use. Remove it from all assigned locations first.
         </AlertDescription>
       </Alert>
       <Separator />

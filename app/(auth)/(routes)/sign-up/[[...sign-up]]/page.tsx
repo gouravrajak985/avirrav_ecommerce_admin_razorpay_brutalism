@@ -1,4 +1,5 @@
 import { SignUp } from '@clerk/nextjs';
+import Image from 'next/image';
 
 export default function SignUpPage() {
   return (
@@ -39,7 +40,13 @@ export default function SignUpPage() {
       {/* Right - SVG Illustration */}
       <div className="hidden md:flex w-1/2 items-center justify-center p-8">
         <div className="max-w-lg w-full">
-          <img src="/auth.svg" alt="Join our platform illustration" className="w-full h-auto" />
+          <Image 
+            src="/auth.svg" 
+            alt="Join our platform illustration" 
+            width={500}
+            height={500}
+            className="w-full h-auto" 
+          />
         </div>
       </div>
 
