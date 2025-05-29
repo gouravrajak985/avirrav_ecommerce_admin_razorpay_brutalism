@@ -34,6 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ProductDimensions } from '@/components/product-dimensions';
 
 interface Tax {
   name: string;
@@ -506,7 +507,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
-
+            <ProductDimensions title="Product Characteristics*">
             <FormField
               control={form.control}
               name='sizeId'
@@ -578,133 +579,134 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+            </ProductDimensions>
+            <ProductDimensions title="Shipping & Dimensions">
+              <div className="space-y-6 p-4">
+                <FormField
+                  control={form.control}
+                  name='weightUnit'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Weight Unit</FormLabel>
+                      <FormDescription>
+                        Choose the unit of measurement for the product's weight.
+                      </FormDescription>
+                      <Select
+                        disabled={loading}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select unit" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="g">Grams (g)</SelectItem>
+                          <SelectItem value="kg">Kilograms (kg)</SelectItem>
+                          <SelectItem value="lbs">Pounds (lbs)</SelectItem>
+                          <SelectItem value="oz">Ounces (oz)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name='weightUnit'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Weight Unit</FormLabel>
-                  <FormDescription>
-                    Choose the unit of measurement for the product's weight.
-                  </FormDescription>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder='Select unit'
+                <FormField
+                  control={form.control}
+                  name='weight'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Weight</FormLabel>
+                      <FormDescription>
+                        Enter the product's weight for shipping calculations.
+                      </FormDescription>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          disabled={loading}
+                          {...field}
+                          value={field.value || ''}
+                          onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
                         />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="g">Grams (g)</SelectItem>
-                      <SelectItem value="kg">Kilograms (kg)</SelectItem>
-                      <SelectItem value="lbs">Pounds (lbs)</SelectItem>
-                      <SelectItem value="oz">Ounces (oz)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name='weight'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Weight</FormLabel>
-                  <FormDescription>
-                    Enter the product's weight for shipping calculations.
-                  </FormDescription>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      disabled={loading}
-                      {...field}
-                      value={field.value || ''}
-                      onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name='length'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Length (cm)</FormLabel>
+                      <FormDescription>
+                        Product length in centimeters for shipping calculations.
+                      </FormDescription>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          disabled={loading}
+                          {...field}
+                          value={field.value || ''}
+                          onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name='length'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Length</FormLabel>
-                  <FormDescription>
-                    Product length in centimeters for shipping calculations. Write 1 if none exists.
-                  </FormDescription>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      disabled={loading}
-                      {...field}
-                      value={field.value || ''}
-                      onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name='width'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Width (cm)</FormLabel>
+                      <FormDescription>
+                        Product width in centimeters for shipping calculations.
+                      </FormDescription>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          disabled={loading}
+                          {...field}
+                          value={field.value || ''}
+                          onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name='width'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Width</FormLabel>
-                  <FormDescription>
-                    Product width in centimeters for shipping calculations. Write 1 if none exists.
-                  </FormDescription>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      disabled={loading}
-                      {...field}
-                      value={field.value || ''}
-                      onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name='height'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Height</FormLabel>
-                  <FormDescription>
-                    Product height in centimeters for shipping calculations. Write 1 if none exists.
-                  </FormDescription>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      disabled={loading}
-                      {...field}
-                      value={field.value || ''}
-                      onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name='height'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Height (cm)</FormLabel>
+                      <FormDescription>
+                        Product height in centimeters for shipping calculations.
+                      </FormDescription>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          disabled={loading}
+                          {...field}
+                          value={field.value || ''}
+                          onChange={e => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </ProductDimensions>
 
             <FormField
               control={form.control}
