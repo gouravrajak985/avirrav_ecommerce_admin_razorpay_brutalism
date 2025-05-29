@@ -144,7 +144,6 @@ export async function POST(
         currency: "INR",
         receipt: `order_${Date.now()}`,
       });
-      console.log('Razorpay Order Id:', razorpayOrder.id);
 
       // Create order and update stock quantities in a transaction
       const order = await prismadb.$transaction(async (tx) => {

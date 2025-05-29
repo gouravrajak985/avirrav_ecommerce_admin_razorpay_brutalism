@@ -18,7 +18,6 @@ export async function POST(
 ) {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
-    console.log('Payment Details:', { razorpay_order_id, razorpay_payment_id, razorpay_signature });
 
     if (!razorpay_signature) {
       return new NextResponse("Webhook signature missing", { status: 400 });
@@ -30,7 +29,6 @@ export async function POST(
         id: params.storeId
       }
     });
-    console.log(store)
     if (!store || !store.razorpayKeySecret) {
       return new NextResponse("Store Razorpay credentials not found", { status: 400 });
     }
@@ -44,7 +42,6 @@ export async function POST(
       .digest("hex");
 
     const isAuthentic = expectedSignature === razorpay_signature;
-    console.log('Signature Verification:', { expectedSignature, razorpay_signature, isAuthentic });
 
     if (isAuthentic) { 
       // First find the order using orderId
@@ -56,7 +53,6 @@ export async function POST(
       });
 
       if (!existingOrder) {
-        console.log('Order not found:', razorpay_order_id);
         return new NextResponse("Order not found", { status: 404 });
       }
 
