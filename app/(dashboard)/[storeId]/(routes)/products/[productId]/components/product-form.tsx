@@ -9,24 +9,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useParams, useRouter } from 'next/navigation';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Heading } from '@/components/ui/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from 'react-hot-toast';
@@ -34,6 +27,13 @@ import { AlertModal } from '@/components/modals/alert-modal';
 import ImageUpload from '@/components/ui/image-upload';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface Tax {
   name: string;
@@ -263,7 +263,10 @@ export const ProductForm = ({
             name='images'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Images</FormLabel>
+                <FormLabel>Product Images</FormLabel>
+                <FormDescription>
+                  Upload high-quality images that showcase your product. Add multiple images to show different angles and details.
+                </FormDescription>
                 <FormControl>
                   <ImageUpload
                     value={field.value.map((image) => image.url)}
@@ -289,6 +292,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
+                  <FormDescription>
+                    Enter a clear and descriptive name for your product that customers will easily understand.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       disabled={loading}
@@ -306,6 +312,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
+                  <FormDescription>
+                    Provide a detailed description of your product including key features and benefits.
+                  </FormDescription>
                   <FormControl>
                     <Textarea
                       disabled={loading}
@@ -323,6 +332,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>SKU</FormLabel>
+                  <FormDescription>
+                    Enter a unique Stock Keeping Unit (SKU) code for inventory tracking.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       disabled={loading}
@@ -340,6 +352,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Cost Per Item</FormLabel>
+                  <FormDescription>
+                    Enter the cost to acquire or produce one unit of this product.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -358,6 +373,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Profit Margin (%)</FormLabel>
+                  <FormDescription>
+                    Set your desired profit margin as a percentage above the cost.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -372,6 +390,9 @@ export const ProductForm = ({
             />
             <div>
               <FormLabel>Custom Taxes</FormLabel>
+              <FormDescription>
+                Add any applicable taxes or additional charges as a percentage.
+              </FormDescription>
               <div className="space-y-4">
                 <div className="flex space-x-2">
                   <Input
@@ -416,6 +437,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Total Price</FormLabel>
+                  <FormDescription>
+                    Final selling price calculated from cost, margin, and taxes.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -433,6 +457,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Stock Quantity</FormLabel>
+                  <FormDescription>
+                    Enter the current available quantity in stock.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -450,6 +477,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
+                  <FormDescription>
+                    Select the category that best fits this product for better organization.
+                  </FormDescription>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -482,6 +512,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Size</FormLabel>
+                  <FormDescription>
+                    Select a size variant for this product. If needed, create new sizes in the Size section. Choose a default value if none exists.
+                  </FormDescription>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -514,6 +547,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Color</FormLabel>
+                  <FormDescription>
+                    Select the color variant for this product. Add new colors in the Color section if needed. Choose a default value if none exists.
+                  </FormDescription>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -546,6 +582,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Weight Unit</FormLabel>
+                  <FormDescription>
+                    Choose the unit of measurement for the product's weight.
+                  </FormDescription>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -577,6 +616,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Weight</FormLabel>
+                  <FormDescription>
+                    Enter the product's weight for shipping calculations.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -598,6 +640,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Length</FormLabel>
+                  <FormDescription>
+                    Product length in centimeters for shipping calculations. Write 1 if none exists.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -617,6 +662,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Width</FormLabel>
+                  <FormDescription>
+                    Product width in centimeters for shipping calculations.  Write 1 if none exists.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -636,6 +684,9 @@ export const ProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Height</FormLabel>
+                  <FormDescription>
+                    Product height in centimeters for shipping calculations.  Write 1 if none exists.
+                  </FormDescription>
                   <FormControl>
                     <Input
                       type='number'
@@ -665,7 +716,7 @@ export const ProductForm = ({
                   <div className='space-y-1 leading-none'>
                     <FormLabel>Featured</FormLabel>
                     <FormDescription>
-                      Featured products will appear on the home page
+                      Featured products will appear on the home page for better visibility.
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -685,7 +736,7 @@ export const ProductForm = ({
                   <div className='space-y-1 leading-none'>
                     <FormLabel>Archived</FormLabel>
                     <FormDescription>
-                      Archived products will not appear in the store
+                      Archived products will be hidden from the store but remain in the database.
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -705,7 +756,7 @@ export const ProductForm = ({
                   <div className='space-y-1 leading-none'>
                     <FormLabel>Continue selling when out of stock</FormLabel>
                     <FormDescription>
-                      Allow customers to purchase even when stock is 0
+                      Allow customers to place orders even when stock quantity reaches zero.
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -725,7 +776,7 @@ export const ProductForm = ({
                   <div className='space-y-1 leading-none'>
                     <FormLabel>Requires shipping</FormLabel>
                     <FormDescription>
-                      This product needs to be shipped
+                      Enable if this product needs to be physically shipped to customers.
                     </FormDescription>
                   </div>
                 </FormItem>
