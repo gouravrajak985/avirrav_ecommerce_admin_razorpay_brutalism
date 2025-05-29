@@ -262,7 +262,7 @@ export const ProductForm = ({
               name='images'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product Images*</FormLabel>
+                  <FormLabel>Product Images<span className='text-yellow-500'>*</span></FormLabel>
                   <FormDescription>
                     Upload high-quality images that showcase your product. Add multiple images to show different angles and details.
                   </FormDescription>
@@ -284,7 +284,7 @@ export const ProductForm = ({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name*</FormLabel>
+                  <FormLabel>Name<span className='text-yellow-500'>*</span></FormLabel>
                   <FormDescription>
                     Enter a clear and descriptive name for your product that customers will easily understand.
                   </FormDescription>
@@ -305,7 +305,7 @@ export const ProductForm = ({
               name='description'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description*</FormLabel>
+                  <FormLabel>Description<span className='text-yellow-500'>*</span></FormLabel>
                   <FormDescription>
                     Provide a detailed description of your product including key features and benefits.
                   </FormDescription>
@@ -326,7 +326,7 @@ export const ProductForm = ({
               name='sku'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>SKU*</FormLabel>
+                  <FormLabel>SKU<span className='text-yellow-500'>*</span></FormLabel>
                   <FormDescription>
                     Enter a unique Stock Keeping Unit (SKU) code for inventory tracking.
                   </FormDescription>
@@ -347,7 +347,7 @@ export const ProductForm = ({
               name='costPerItem'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cost Per Item*</FormLabel>
+                  <FormLabel>Cost Per Item<span className='text-yellow-500'>*</span></FormLabel>
                   <FormDescription>
                     Enter the cost to acquire or produce one unit of this product.
                   </FormDescription>
@@ -369,7 +369,7 @@ export const ProductForm = ({
               name='profitMargin'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Profit Margin (%)*</FormLabel>
+                  <FormLabel>Profit Margin (%)<span className='text-yellow-500'>*</span></FormLabel>
                   <FormDescription>
                     Set your desired profit margin as a percentage above the cost.
                   </FormDescription>
@@ -387,7 +387,7 @@ export const ProductForm = ({
             />
 
             <div>
-              <FormLabel>Custom Taxes*</FormLabel>
+              <FormLabel>Custom Taxes</FormLabel>
               <FormDescription>
                 Add any applicable taxes or additional charges as a percentage.
               </FormDescription>
@@ -456,7 +456,7 @@ export const ProductForm = ({
               name='stockQuantity'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Stock Quantity*</FormLabel>
+                  <FormLabel>Stock Quantity<span className='text-yellow-500'>*</span></FormLabel>
                   <FormDescription>
                     Enter the current available quantity in stock.
                   </FormDescription>
