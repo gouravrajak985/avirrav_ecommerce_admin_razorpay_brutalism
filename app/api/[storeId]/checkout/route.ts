@@ -64,7 +64,6 @@ export async function POST(
       // Check if customer exists using findUnique with composite key
       let customer = await prismadb.customer.findUnique({
         where: {
-            storeId: params.storeId,
             email: email || ''
         }
       });
@@ -72,7 +71,6 @@ export async function POST(
         // Update existing customer
         customer = await prismadb.customer.update({
           where : {
-              storeId: params.storeId,
               email: email || ''
           },
           data: {
@@ -92,7 +90,6 @@ export async function POST(
         // Create new customer with upsert to handle race conditions
         customer = await prismadb.customer.upsert({
           where:{
-              storeId: params.storeId,
               email: email || ''
           },
           update: {
