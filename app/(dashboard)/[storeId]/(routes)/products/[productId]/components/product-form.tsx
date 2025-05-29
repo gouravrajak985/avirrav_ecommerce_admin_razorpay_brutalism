@@ -158,7 +158,6 @@ export const ProductForm = ({
     setTaxes(newTaxes);
   };
 
-  // Calculate total price when cost, profit margin or taxes change
   useEffect(() => {
     const costPerItem = Number(form.getValues('costPerItem')) || 0;
     const profitMargin = Number(form.getValues('profitMargin')) || 0;
@@ -205,13 +204,11 @@ export const ProductForm = ({
     try {
       setLoading(true);
       
-      // First check if the product has any orders
       const response = await axios.get(`/api/${params.storeId}/products/${params.productId}/check-orders`);
       const { hasOrders } = response.data;
 
       if (hasOrders) {
         toast.error('Cannot delete product with existing orders. Instead Archive the Product to hide it.');
-        
         return;
       }
 
@@ -258,34 +255,29 @@ export const ProductForm = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className='space-y-8 w-full'
         >
-          <FormField
-            control={form.control}
-            name='images'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Product Images</FormLabel>
-                <FormDescription>
-                  Upload high-quality images that showcase your product. Add multiple images to show different angles and details.
-                </FormDescription>
-                <FormControl>
-                  <ImageUpload
-                    value={field.value.map((image) => image.url)}
-                    disabled={loading}
-                    onChange={(url) =>
-                      field.onChange([...field.value, { url }])
-                    }
-                    onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((current) => current.url !== url),
-                      ])
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className='grid grid-cols-3 gap-8'>
+          <div className='space-y-6'>
+            <FormField
+              control={form.control}
+              name='images'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Product Images</FormLabel>
+                  <FormDescription>
+                    Upload high-quality images that showcase your product. Add multiple images to show different angles and details.
+                  </FormDescription>
+                  <FormControl>
+                    <ImageUpload
+                      value={field.value.map((image) => image.url)}
+                      disabled={loading}
+                      onChange={(url) => field.onChange([...field.value, { url }])}
+                      onRemove={(url) => field.onChange([...field.value.filter((current) => current.url !== url)])}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name='name'
@@ -306,6 +298,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='description'
@@ -326,6 +319,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='sku'
@@ -346,6 +340,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='costPerItem'
@@ -367,6 +362,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='profitMargin'
@@ -388,6 +384,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <div>
               <FormLabel>Custom Taxes</FormLabel>
               <FormDescription>
@@ -431,6 +428,7 @@ export const ProductForm = ({
                 ))}
               </div>
             </div>
+
             <FormField
               control={form.control}
               name='price'
@@ -451,6 +449,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='stockQuantity'
@@ -471,6 +470,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='categoryId'
@@ -506,6 +506,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='sizeId'
@@ -541,6 +542,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='colorId'
@@ -576,6 +578,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='weightUnit'
@@ -610,6 +613,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='weight'
@@ -632,8 +636,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
-          </div>
-          <div className='grid grid-cols-3 gap-8'>
+
             <FormField
               control={form.control}
               name='length'
@@ -656,6 +659,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='width'
@@ -663,7 +667,7 @@ export const ProductForm = ({
                 <FormItem>
                   <FormLabel>Width</FormLabel>
                   <FormDescription>
-                    Product width in centimeters for shipping calculations.  Write 1 if none exists.
+                    Product width in centimeters for shipping calculations. Write 1 if none exists.
                   </FormDescription>
                   <FormControl>
                     <Input
@@ -678,6 +682,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='height'
@@ -685,7 +690,7 @@ export const ProductForm = ({
                 <FormItem>
                   <FormLabel>Height</FormLabel>
                   <FormDescription>
-                    Product height in centimeters for shipping calculations.  Write 1 if none exists.
+                    Product height in centimeters for shipping calculations. Write 1 if none exists.
                   </FormDescription>
                   <FormControl>
                     <Input
@@ -700,8 +705,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
-          </div>
-          <div className='grid grid-cols-3 gap-8'>
+
             <FormField
               control={form.control}
               name='isFeatured'
@@ -722,6 +726,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='isArchived'
@@ -742,6 +747,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='sellWhenOutOfStock'
@@ -762,6 +768,7 @@ export const ProductForm = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name='requiresShipping'
@@ -783,6 +790,7 @@ export const ProductForm = ({
               )}
             />
           </div>
+
           <Button disabled={loading} className='ml-auto' type='submit'>
             {action}
           </Button>
@@ -791,3 +799,5 @@ export const ProductForm = ({
     </>
   );
 };
+
+export default ProductForm;
