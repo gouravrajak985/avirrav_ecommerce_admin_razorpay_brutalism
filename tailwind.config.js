@@ -17,91 +17,94 @@ module.exports = {
     },
     extend: {
       colors: {
-        // Polaris Color System
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        // Official Polaris Color System
+        border: "223 227 232", /* #dfe3e8 */
+        input: "223 227 232", /* #dfe3e8 */
+        ring: "92 106 196", /* #5c6ac4 */
+        background: "244 246 248", /* #f4f6f8 */
+        foreground: "33 43 54", /* #212b36 */
+        card: "255 255 255", /* #ffffff */
+        "card-foreground": "33 43 54", /* #212b36 */
+        popover: "255 255 255", /* #ffffff */
+        "popover-foreground": "33 43 54", /* #212b36 */
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "92 106 196", /* #5c6ac4 - Main purple */
+          foreground: "255 255 255", /* #ffffff */
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "99 115 129", /* #637381 - Muted text */
+          foreground: "255 255 255", /* #ffffff */
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "244 246 248", /* #f4f6f8 */
+          foreground: "99 115 129", /* #637381 */
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "80 184 60", /* #50b83c - Success */
+          foreground: "255 255 255", /* #ffffff */
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+        destructive: {
+          DEFAULT: "222 54 24", /* #de3618 - Critical */
+          foreground: "255 255 255", /* #ffffff */
         },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        
+        // Shopify Polaris Official Colors
+        polaris: {
+          purple: "#5c6ac4",
+          blue: "#006fbb",
+          "light-grey-bg": "#f4f6f8",
+          white: "#ffffff",
+          text: "#212b36",
+          "muted-text": "#637381",
+          border: "#dfe3e8",
+          success: "#50b83c",
+          critical: "#de3618",
         },
-        // Shopify Polaris Colors
-        shopify: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
-        },
+        
         surface: {
-          DEFAULT: '#ffffff',
-          subdued: '#fafbfb',
-          disabled: '#f6f6f7',
-          hovered: '#f1f2f3',
-          pressed: '#e8e9ea',
-          depressed: '#edeeef',
+          DEFAULT: "#ffffff",
+          subdued: "#fafbfb",
+          disabled: "#f6f6f7",
+          hovered: "#f1f2f3",
+          pressed: "#e8e9ea",
+          depressed: "#edeeef",
         },
+        
         text: {
-          DEFAULT: '#202223',
-          subdued: '#6d7175',
-          disabled: '#8c9196',
+          DEFAULT: "#212b36",
+          subdued: "#637381",
+          disabled: "#8c9196",
         },
+        
         interactive: {
-          DEFAULT: '#2c6ecb',
-          hovered: '#1f5199',
-          pressed: '#103262',
-          disabled: '#bdc1cc',
+          DEFAULT: "#006fbb", /* Blue for actions */
+          hovered: "#005a9b",
+          pressed: "#004a7c",
+          disabled: "#bdc1cc",
         },
+        
         critical: {
-          DEFAULT: '#d72c0d',
-          subdued: '#fef7f6',
-          surface: '#fed3d1',
+          DEFAULT: "#de3618",
+          subdued: "#fef7f6",
+          surface: "#fed3d1",
         },
+        
         warning: {
-          DEFAULT: '#ffc453',
-          subdued: '#fffbf4',
-          surface: '#fff5d6',
+          DEFAULT: "#ffc453",
+          subdued: "#fffbf4",
+          surface: "#fff5d6",
         },
+        
         success: {
-          DEFAULT: '#008060',
-          subdued: '#f6fffe',
-          surface: '#d1f7ee',
+          DEFAULT: "#50b83c",
+          subdued: "#f6fffe",
+          surface: "#d1f7ee",
         },
+        
         highlight: {
-          DEFAULT: '#5bcdda',
-          subdued: '#f7fcfd',
-          surface: '#c7f0f4',
+          DEFAULT: "#5bcdda",
+          subdued: "#f7fcfd",
+          surface: "#c7f0f4",
         },
       },
       borderRadius: {

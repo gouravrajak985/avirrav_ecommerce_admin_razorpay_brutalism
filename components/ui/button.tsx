@@ -14,9 +14,10 @@ const buttonVariants = cva(
         destructive: "bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/90 polaris-shadow-sm",
         outline: "border-border bg-surface hover:bg-surface-hovered text-foreground polaris-shadow-sm",
         ghost: "border-transparent hover:bg-surface-hovered text-foreground",
-        link: "text-primary underline-offset-4 hover:underline border-transparent",
+        link: "text-interactive underline-offset-4 hover:underline border-transparent",
         success: "bg-success text-white border-success hover:bg-success/90 polaris-shadow-sm",
         warning: "bg-warning text-foreground border-warning hover:bg-warning/90 polaris-shadow-sm",
+        blue: "bg-interactive text-white border-interactive hover:bg-interactive-hovered polaris-shadow-sm",
       },
       size: {
         sm: "h-8 px-3 text-body-sm rounded-md",
