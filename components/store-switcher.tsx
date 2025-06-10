@@ -75,23 +75,23 @@ export default function StoreSwitcher({
           <ChevronsUpDown className='ml-auto h-4 w-4 shrink-0 text-gray-400' />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-[200px] p-0'>
-        <Command>
+      <PopoverContent className='w-[200px] p-0 bg-white border border-gray-200 shadow-lg'>
+        <Command className="bg-white">
           <CommandList>
             <CommandInput placeholder='Search store...' className="font-medium" />
-            <CommandEmpty className="text-center py-3 text-body-sm">No store found.</CommandEmpty>
-            <CommandGroup heading='Stores' className="font-medium text-muted-foreground">
+            <CommandEmpty className="text-center py-3 text-sm text-gray-600">No store found.</CommandEmpty>
+            <CommandGroup heading='Stores' className="font-medium text-gray-600">
               {formattedItems.map((store) => (
                 <CommandItem
                   key={store.value}
                   onSelect={() => onStoreSelect(store)}
-                  className='text-body font-medium hover:bg-surface-hovered'
+                  className='text-sm font-medium hover:bg-gray-100 text-gray-900'
                 >
-                  <Store className='mr-2 h-4 w-4 text-muted-foreground' />
+                  <Store className='mr-2 h-4 w-4 text-gray-600' />
                   {store.label}
                   <Check
                     className={cn(
-                      'ml-auto h-4 w-4 text-primary',
+                      'ml-auto h-4 w-4 text-blue-600',
                       currentStore?.value === store.value
                         ? 'opacity-100'
                         : 'opacity-0'
@@ -109,9 +109,9 @@ export default function StoreSwitcher({
                   setOpen(false);
                   storeModal.onOpen();
                 }}
-                className="hover:bg-surface-hovered font-medium"
+                className="hover:bg-gray-100 font-medium text-gray-900"
               >
-                <PlusCircle className='mr-2 h-5 w-5 text-muted-foreground' />
+                <PlusCircle className='mr-2 h-5 w-5 text-gray-600' />
                 Create Store
               </CommandItem>
             </CommandGroup>
