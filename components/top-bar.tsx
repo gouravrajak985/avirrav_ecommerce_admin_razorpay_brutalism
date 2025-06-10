@@ -14,7 +14,7 @@ interface TopBarProps {
 
 export const TopBar = ({ stores }: TopBarProps) => {
   return (
-    <div className="h-14 bg-gray-900 border-b border-gray-700 flex items-center px-6">
+    <div className="h-14 bg-gray-900  flex items-center px-6">
       {/* Left - Store Switcher */}
       <div className="flex items-center">
         <StoreSwitcher items={stores} />

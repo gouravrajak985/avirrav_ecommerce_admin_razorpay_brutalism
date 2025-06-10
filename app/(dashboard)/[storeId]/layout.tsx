@@ -44,12 +44,12 @@ export default async function DashboardLayout({
       {/* Bottom Section (remaining height) with curved border like Shopify - White background */}
       <div className="flex-1 flex rounded-t-3xl bg-white overflow-hidden shadow-lg">
         {/* Left Sidebar (224px fixed width) */}
-        <div className="w-56 flex-shrink-0 bg-white border-r border-gray-200">
+        <div className="w-56 flex-shrink-0 bg-gray-100 border-r border-gray-200">
           <AdminSidebar />
         </div>
 
         {/* Main Content (remaining width) */}
-        <div className="flex-1 flex flex-col overflow-hidden bg-white">
+        <div className="flex-1 flex flex-col overflow-hidden bg-gray-50">
           <main className="flex-1 overflow-y-auto p-6">
             {children}
           </main>
