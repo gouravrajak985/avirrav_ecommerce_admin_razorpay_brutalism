@@ -5,8 +5,8 @@
 @layer base {
   :root {
     /* Official Polaris Design System Colors */
-    --background: 244 246 248; /* #f4f6f8 - Light Grey BG */
-    --foreground: 33 43 54; /* #212b36 - Text */
+    --background: 17 24 39; /* #111827 - Gray 900 */
+    --foreground: 243 244 246; /* #f3f4f6 - Gray 100 */
     --card: 255 255 255; /* #ffffff - White */
     --card-foreground: 33 43 54; /* #212b36 - Text */
     --popover: 255 255 255; /* #ffffff - White */
@@ -28,8 +28,8 @@
   }
 
   .dark {
-    --background: 26 32 44; /* #1a202c */
-    --foreground: 237 242 247; /* #edf2f7 */
+    --background: 17 24 39; /* #111827 - Gray 900 */
+    --foreground: 243 244 246; /* #f3f4f6 - Gray 100 */
     --card: 45 55 72; /* #2d3748 */
     --card-foreground: 237 242 247; /* #edf2f7 */
     --popover: 45 55 72; /* #2d3748 */

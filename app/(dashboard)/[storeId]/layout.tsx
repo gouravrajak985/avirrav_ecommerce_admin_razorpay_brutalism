@@ -35,21 +35,21 @@ export default async function DashboardLayout({
   });
 
   return (
-    <div className="h-screen flex flex-col bg-background">
+    <div className="h-screen flex flex-col bg-gray-900">
       {/* Top Section (10% height) - Shopify-style dark header */}
       <div className="h-[10%] min-h-[56px]">
         <TopBar stores={stores} />
       </div>
 
-      {/* Bottom Section (90% height) with curved border like Shopify */}
-      <div className="h-[90%] flex rounded-t-3xl bg-background border-t border-border overflow-hidden shadow-lg">
+      {/* Bottom Section (90% height) with curved border like Shopify - White background */}
+      <div className="h-[90%] flex rounded-t-3xl bg-white overflow-hidden shadow-lg">
         {/* Left Sidebar (10% width) */}
-        <div className="w-[10%] min-w-[224px] bg-surface border-r border-border">
+        <div className="w-[10%] min-w-[224px] bg-white border-r border-gray-200">
           <AdminSidebar />
         </div>
 
         {/* Main Content (90% width) */}
-        <div className="flex-1 flex flex-col overflow-hidden bg-background">
+        <div className="flex-1 flex flex-col overflow-hidden bg-white">
           <main className="flex-1 overflow-y-auto p-6">
             {children}
           </main>
