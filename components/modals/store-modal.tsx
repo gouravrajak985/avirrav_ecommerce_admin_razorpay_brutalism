@@ -20,7 +20,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -59,10 +58,10 @@ export const StoreModal = () => {
       onClose={storeModal.onClose}
     >
       <div className="mt-2">
-        <div className="p-4 rounded-lg border-2 border-primary/10 bg-accent/5">
-          <div className="flex items-center space-x-3 mb-4 pb-2 border-b border-primary/10">
-            <Store className="h-6 w-6 text-primary" />
-            <h3 className="font-bold text-primary">New Store Details</h3>
+        <div className="p-4 rounded-lg border border-border bg-surface-subdued">
+          <div className="flex items-center space-x-3 mb-4 pb-2 border-b border-border">
+            <Store className="h-5 w-5 text-primary" />
+            <h3 className="font-medium text-primary">New Store Details</h3>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -71,12 +70,11 @@ export const StoreModal = () => {
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-primary/80 font-bold">Store Name</FormLabel>
+                    <FormLabel>Store Name</FormLabel>
                     <FormControl>
                       <Input
                         disabled={loading}
                         placeholder='E-Commerce'
-                        className="rounded-lg border-2 border-black focus:border-primary neo-shadow"
                         {...field}
                       />
                     </FormControl>
@@ -84,12 +82,11 @@ export const StoreModal = () => {
                   </FormItem>
                 )}
               />
-              <div className='pt-6 space-x-4 flex items-center justify-end w-full'>
+              <div className='pt-6 space-x-3 flex items-center justify-end w-full'>
                 <Button
                   disabled={loading}
-                  variant='outline'
+                  variant='secondary'
                   onClick={storeModal.onClose}
-                  className="rounded-lg border-2 border-black neo-shadow hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-200"
                   type="button"
                 >
                   Cancel
@@ -97,7 +94,7 @@ export const StoreModal = () => {
                 <Button 
                   disabled={loading} 
                   type='submit'
-                  className="rounded-lg border-2 border-black neo-shadow hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-200 bg-primary hover:bg-primary/90 text-white font-bold"
+                  variant="primary"
                 >
                   Create Store
                 </Button>

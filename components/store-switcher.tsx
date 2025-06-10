@@ -59,36 +59,35 @@ export default function StoreSwitcher({
       <PopoverTrigger asChild>
         <Button
           variant='outline'
-          size='sm'
+          size='default'
           role='combobox'
           aria-expanded={open}
           aria-label='Select a store'
           className={cn(
-            'w-[200px] justify-between rounded-lg border-2 border-black',
-            'neo-shadow hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-200',
+            'w-[200px] justify-between',
             className
           )}
         >
-          <Store className='mr-2 h-4 w-4 text-primary' />
+          <Store className='mr-2 h-4 w-4 text-muted-foreground' />
           <span className="font-medium truncate flex-1 text-left">
             {currentStore?.label}
           </span>
-          <ChevronsUpDown className='ml-auto h-4 w-4 shrink-0 text-primary/50' />
+          <ChevronsUpDown className='ml-auto h-4 w-4 shrink-0 text-muted-foreground' />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-[200px] p-0'>
         <Command>
           <CommandList>
             <CommandInput placeholder='Search store...' className="font-medium" />
-            <CommandEmpty className="text-center py-3 text-sm">No store found.</CommandEmpty>
-            <CommandGroup heading='Stores' className="font-bold text-primary/80">
+            <CommandEmpty className="text-center py-3 text-body-sm">No store found.</CommandEmpty>
+            <CommandGroup heading='Stores' className="font-medium text-muted-foreground">
               {formattedItems.map((store) => (
                 <CommandItem
                   key={store.value}
                   onSelect={() => onStoreSelect(store)}
-                  className='text-sm font-medium hover:bg-accent/10'
+                  className='text-body font-medium hover:bg-surface-hovered'
                 >
-                  <Store className='mr-2 h-4 w-4 text-primary' />
+                  <Store className='mr-2 h-4 w-4 text-muted-foreground' />
                   {store.label}
                   <Check
                     className={cn(
@@ -110,9 +109,9 @@ export default function StoreSwitcher({
                   setOpen(false);
                   storeModal.onOpen();
                 }}
-                className="hover:bg-accent/10 font-bold"
+                className="hover:bg-surface-hovered font-medium"
               >
-                <PlusCircle className='mr-2 h-5 w-5 text-primary' />
+                <PlusCircle className='mr-2 h-5 w-5 text-muted-foreground' />
                 Create Store
               </CommandItem>
             </CommandGroup>

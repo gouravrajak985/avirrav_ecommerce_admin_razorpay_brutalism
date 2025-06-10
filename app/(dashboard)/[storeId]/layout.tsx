@@ -28,9 +28,9 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      <main className="flex-1 pt-16"> {/* Main content area with padding for navbar */}
+      <main className="flex-1 pt-14"> {/* Main content area with padding for navbar */}
         {children}
       </main>
       <Footer />
