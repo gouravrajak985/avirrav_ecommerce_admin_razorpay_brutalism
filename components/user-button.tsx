@@ -31,8 +31,8 @@ export const CustomUserButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative h-8 w-8 rounded-lg border border-gray-700 overflow-hidden hover:bg-gray-800 polaris-transition focus:polaris-focus flex items-center justify-center bg-gray-900">
-          <User className="h-4 w-4 text-gray-300" />
+        <button className="relative h-8 w-8 rounded-lg border border-gray-600 overflow-hidden hover:bg-gray-800 polaris-transition focus:polaris-focus flex items-center justify-center bg-gray-800 text-gray-300 hover:text-white">
+          <User className="h-4 w-4" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-72 p-2">

@@ -58,13 +58,13 @@ export default function StoreSwitcher({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant='outline'
+          variant='ghost'
           size='default'
           role='combobox'
           aria-expanded={open}
           aria-label='Select a store'
           className={cn(
-            'w-[200px] justify-between bg-gray-900 border-gray-700 text-white hover:bg-gray-800',
+            'w-[200px] justify-between bg-gray-800 border border-gray-600 text-white hover:bg-gray-700 hover:text-white rounded-md h-9',
             className
           )}
         >

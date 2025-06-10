@@ -20,9 +20,9 @@ export function ThemeToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
-          variant='outline' 
+          variant='ghost' 
           size='icon-sm'
-          className="border-gray-700 text-white hover:bg-gray-800"
+          className="text-gray-300 hover:text-white hover:bg-gray-800 border-0"
         >
           <Sun className='h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
           <Moon className='absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
