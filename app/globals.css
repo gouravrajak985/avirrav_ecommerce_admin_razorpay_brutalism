@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    /* Polaris Design System Colors */
-    --background: 246 247 249; /* #f6f7f9 */
-    --foreground: 32 34 35; /* #202223 */
-    --card: 255 255 255; /* #ffffff */
-    --card-foreground: 32 34 35; /* #202223 */
-    --popover: 255 255 255; /* #ffffff */
-    --popover-foreground: 32 34 35; /* #202223 */
-    --primary: 44 110 203; /* #2c6ecb - Shopify Blue */
-    --primary-foreground: 255 255 255; /* #ffffff */
-    --secondary: 109 113 117; /* #6d7175 */
-    --secondary-foreground: 255 255 255; /* #ffffff */
-    --muted: 241 242 243; /* #f1f2f3 */
-    --muted-foreground: 109 113 117; /* #6d7175 */
-    --accent: 0 128 96; /* #008060 - Shopify Green */
-    --accent-foreground: 255 255 255; /* #ffffff */
-    --destructive: 215 44 13; /* #d72c0d */
-    --destructive-foreground: 255 255 255; /* #ffffff */
-    --border: 227 227 227; /* #e3e3e3 */
-    --input: 227 227 227; /* #e3e3e3 */
-    --ring: 44 110 203; /* #2c6ecb */
+    /* Official Polaris Design System Colors */
+    --background: 244 246 248; /* #f4f6f8 - Light Grey BG */
+    --foreground: 33 43 54; /* #212b36 - Text */
+    --card: 255 255 255; /* #ffffff - White */
+    --card-foreground: 33 43 54; /* #212b36 - Text */
+    --popover: 255 255 255; /* #ffffff - White */
+    --popover-foreground: 33 43 54; /* #212b36 - Text */
+    --primary: 92 106 196; /* #5c6ac4 - Primary purple */
+    --primary-foreground: 255 255 255; /* #ffffff - White */
+    --secondary: 99 115 129; /* #637381 - Muted Text */
+    --secondary-foreground: 255 255 255; /* #ffffff - White */
+    --muted: 244 246 248; /* #f4f6f8 - Light Grey BG */
+    --muted-foreground: 99 115 129; /* #637381 - Muted Text */
+    --accent: 80 184 60; /* #50b83c - Success */
+    --accent-foreground: 255 255 255; /* #ffffff - White */
+    --destructive: 222 54 24; /* #de3618 - Critical */
+    --destructive-foreground: 255 255 255; /* #ffffff - White */
+    --border: 223 227 232; /* #dfe3e8 - Border */
+    --input: 223 227 232; /* #dfe3e8 - Border */
+    --ring: 92 106 196; /* #5c6ac4 - Primary purple */
     --radius: 8px;
   }
 
@@ -34,19 +34,19 @@
     --card-foreground: 237 242 247; /* #edf2f7 */
     --popover: 45 55 72; /* #2d3748 */
     --popover-foreground: 237 242 247; /* #edf2f7 */
-    --primary: 66 153 225; /* #4299e1 */
-    --primary-foreground: 26 32 44; /* #1a202c */
+    --primary: 92 106 196; /* #5c6ac4 */
+    --primary-foreground: 255 255 255; /* #ffffff */
     --secondary: 74 85 104; /* #4a5568 */
     --secondary-foreground: 237 242 247; /* #edf2f7 */
     --muted: 74 85 104; /* #4a5568 */
     --muted-foreground: 160 174 192; /* #a0aec0 */
-    --accent: 72 187 120; /* #48bb78 */
-    --accent-foreground: 26 32 44; /* #1a202c */
-    --destructive: 245 101 101; /* #f56565 */
-    --destructive-foreground: 237 242 247; /* #edf2f7 */
+    --accent: 80 184 60; /* #50b83c */
+    --accent-foreground: 255 255 255; /* #ffffff */
+    --destructive: 222 54 24; /* #de3618 */
+    --destructive-foreground: 255 255 255; /* #ffffff */
     --border: 74 85 104; /* #4a5568 */
     --input: 74 85 104; /* #4a5568 */
-    --ring: 66 153 225; /* #4299e1 */
+    --ring: 92 106 196; /* #5c6ac4 */
   }
 }
 
