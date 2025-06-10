@@ -64,15 +64,15 @@ export default function StoreSwitcher({
           aria-expanded={open}
           aria-label='Select a store'
           className={cn(
-            'w-[200px] justify-between',
+            'w-[200px] justify-between bg-gray-900 border-gray-700 text-white hover:bg-gray-800',
             className
           )}
         >
-          <Store className='mr-2 h-4 w-4 text-muted-foreground' />
-          <span className="font-medium truncate flex-1 text-left">
+          <Store className='mr-2 h-4 w-4 text-gray-300' />
+          <span className="font-medium truncate flex-1 text-left text-white">
             {currentStore?.label}
           </span>
-          <ChevronsUpDown className='ml-auto h-4 w-4 shrink-0 text-muted-foreground' />
+          <ChevronsUpDown className='ml-auto h-4 w-4 shrink-0 text-gray-400' />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-[200px] p-0'>
