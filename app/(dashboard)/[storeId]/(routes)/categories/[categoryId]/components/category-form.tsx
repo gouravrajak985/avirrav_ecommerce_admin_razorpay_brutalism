@@ -30,6 +30,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectEmpty,
 } from '@/components/ui/select';
 
 const formSchema = z.object({
@@ -178,11 +179,15 @@ export const CategoryForm = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {billboards.map((billboard) => (
-                        <SelectItem key={billboard.id} value={billboard.id}>
-                          {billboard.label}
-                        </SelectItem>
-                      ))}
+                      {billboards.length === 0 ? (
+                        <SelectEmpty>No billboards available. Create a billboard first.</SelectEmpty>
+                      ) : (
+                        billboards.map((billboard) => (
+                          <SelectItem key={billboard.id} value={billboard.id}>
+                            {billboard.label}
+                          </SelectItem>
+                        ))
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />
