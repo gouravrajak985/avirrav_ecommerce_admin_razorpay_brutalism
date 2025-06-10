@@ -4,48 +4,49 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 142 76% 36%;
-    --primary-foreground: 355 100% 97%;
-    --secondary: 217 91% 60%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 237 12% 50%;
-    --accent: 43 96% 56%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 240 5.9% 10%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 215 20.2% 65.1%;
-    --radius: 0.5rem;
+    /* Polaris Design System Colors */
+    --background: 246 247 249; /* #f6f7f9 */
+    --foreground: 32 34 35; /* #202223 */
+    --card: 255 255 255; /* #ffffff */
+    --card-foreground: 32 34 35; /* #202223 */
+    --popover: 255 255 255; /* #ffffff */
+    --popover-foreground: 32 34 35; /* #202223 */
+    --primary: 44 110 203; /* #2c6ecb - Shopify Blue */
+    --primary-foreground: 255 255 255; /* #ffffff */
+    --secondary: 109 113 117; /* #6d7175 */
+    --secondary-foreground: 255 255 255; /* #ffffff */
+    --muted: 241 242 243; /* #f1f2f3 */
+    --muted-foreground: 109 113 117; /* #6d7175 */
+    --accent: 0 128 96; /* #008060 - Shopify Green */
+    --accent-foreground: 255 255 255; /* #ffffff */
+    --destructive: 215 44 13; /* #d72c0d */
+    --destructive-foreground: 255 255 255; /* #ffffff */
+    --border: 227 227 227; /* #e3e3e3 */
+    --input: 227 227 227; /* #e3e3e3 */
+    --ring: 44 110 203; /* #2c6ecb */
+    --radius: 8px;
   }
 
   .dark {
-    --background: 225 9% 9%;
-    --foreground: 210 40% 98%;
-    --card: 228 9% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 228 9% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 142 70% 45%;
-    --primary-foreground: 144.9 80.4% 10%;
-    --secondary: 217 91% 60%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 43 96% 56%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 237 12% 80%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 26 32 44; /* #1a202c */
+    --foreground: 237 242 247; /* #edf2f7 */
+    --card: 45 55 72; /* #2d3748 */
+    --card-foreground: 237 242 247; /* #edf2f7 */
+    --popover: 45 55 72; /* #2d3748 */
+    --popover-foreground: 237 242 247; /* #edf2f7 */
+    --primary: 66 153 225; /* #4299e1 */
+    --primary-foreground: 26 32 44; /* #1a202c */
+    --secondary: 74 85 104; /* #4a5568 */
+    --secondary-foreground: 237 242 247; /* #edf2f7 */
+    --muted: 74 85 104; /* #4a5568 */
+    --muted-foreground: 160 174 192; /* #a0aec0 */
+    --accent: 72 187 120; /* #48bb78 */
+    --accent-foreground: 26 32 44; /* #1a202c */
+    --destructive: 245 101 101; /* #f56565 */
+    --destructive-foreground: 237 242 247; /* #edf2f7 */
+    --border: 74 85 104; /* #4a5568 */
+    --input: 74 85 104; /* #4a5568 */
+    --ring: 66 153 225; /* #4299e1 */
   }
 }
 
@@ -54,62 +55,90 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-/* Neobrutalism styles */
-.neo-shadow {
-  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.8);
+/* Polaris-specific utility classes */
+@layer utilities {
+  .polaris-shadow {
+    box-shadow: 0 1px 0 0 rgba(22, 29, 37, 0.05), 0 1px 1px 0 rgba(22, 29, 37, 0.1);
+  }
+  
+  .polaris-shadow-sm {
+    box-shadow: 0 1px 0 0 rgba(22, 29, 37, 0.05);
+  }
+  
+  .polaris-shadow-md {
+    box-shadow: 0 4px 8px -2px rgba(22, 29, 37, 0.1), 0 1px 0 0 rgba(22, 29, 37, 0.05);
+  }
+  
+  .polaris-shadow-lg {
+    box-shadow: 0 8px 16px -4px rgba(22, 29, 37, 0.1), 0 1px 0 0 rgba(22, 29, 37, 0.05);
+  }
+  
+  .polaris-shadow-inset {
+    box-shadow: inset 0 1px 0 0 rgba(22, 29, 37, 0.05);
+  }
+
+  .polaris-focus {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  .polaris-transition {
+    @apply transition-all duration-200 ease-in-out;
+  }
 }
 
-.neo-border {
-  border: 3px solid black;
-  border-radius: 0.5rem;
-}
-
+/* Remove neobrutalism styles */
+.neo-shadow,
+.neo-border,
 .neo-btn {
-  transition: all 0.2s ease;
-  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: none;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
 }
 
-.neo-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.8);
+/* Polaris-style animations */
+.animate-polaris-fade-in {
+  animation: fade-in 0.2s ease-out;
 }
 
-.neo-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.8);
+.animate-polaris-slide-in {
+  animation: slide-in 0.3s ease-out;
 }
 
-/* Animation styles */
-.animate-in {
-  animation: animate-in 0.5s ease-out;
+/* Typography improvements */
+.polaris-text-heading {
+  @apply text-heading font-semibold text-foreground;
 }
 
-.animate-out {
-  animation: animate-out 0.5s ease-in;
+.polaris-text-subheading {
+  @apply text-subheading font-semibold text-foreground;
 }
 
-@keyframes animate-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.polaris-text-body {
+  @apply text-body text-foreground;
 }
 
-@keyframes animate-out {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(10px);
-  }
+.polaris-text-caption {
+  @apply text-caption text-muted-foreground;
+}
+
+/* Form improvements */
+.polaris-form-field {
+  @apply space-y-2;
+}
+
+.polaris-form-label {
+  @apply text-subheading font-medium text-foreground;
+}
+
+.polaris-form-help {
+  @apply text-caption text-muted-foreground;
+}
+
+.polaris-form-error {
+  @apply text-caption text-destructive font-medium;
 }
