@@ -33,10 +33,10 @@ export const Modal = ({
   };
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>
-      <DialogContent className={cn("p-6 rounded-lg border border-border", className)}>
-        <DialogHeader className="pb-4 mb-2 border-b border-border">
-          <DialogTitle className="text-heading font-semibold">{title}</DialogTitle>
-          <DialogDescription className="text-muted-foreground pt-2">{description}</DialogDescription>
+      <DialogContent className={cn("p-6 rounded-lg border border-gray-200 bg-white", className)}>
+        <DialogHeader className="pb-4 mb-2 border-b border-gray-200">
+          <DialogTitle className="text-lg font-semibold text-gray-900">{title}</DialogTitle>
+          <DialogDescription className="text-gray-600 pt-2">{description}</DialogDescription>
         </DialogHeader>
         <div className="mt-4">{children}</div>
       </DialogContent>
