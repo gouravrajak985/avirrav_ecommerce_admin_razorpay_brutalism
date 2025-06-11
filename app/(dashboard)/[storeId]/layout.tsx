@@ -37,25 +37,29 @@ export default async function DashboardLayout({
 
   return (
     <MobileDetector storeId={params.storeId}>
-      <div className="h-screen flex flex-col bg-gray-900 overflow-hidden">
-        {/* Top Section (56px fixed height) - Shopify-style dark header */}
-        <div className="h-14 flex-shrink-0">
+      <div className="min-h-screen flex flex-col bg-gray-900">
+        {/* Top Section - Shopify-style dark header */}
+        <div className="h-14 flex-shrink-0 relative z-50">
           <TopBar stores={stores} />
         </div>
 
-        {/* Bottom Section (remaining height) with curved border like Shopify - White background */}
-        <div className="flex-1 flex rounded-t-3xl bg-white overflow-hidden shadow-lg">
-          {/* Left Sidebar (224px fixed width) - Hidden on mobile */}
+        {/* Bottom Section with curved border - White background */}
+        <div className="flex-1 flex rounded-t-3xl bg-white shadow-lg relative">
+          {/* Left Sidebar - Hidden on mobile */}
           <div className="hidden md:block w-56 flex-shrink-0 bg-gray-100 border-r border-gray-200">
             <AdminSidebar />
           </div>
 
-          {/* Main Content (remaining width) */}
-          <div className="flex-1 flex flex-col overflow-hidden bg-gray-50">
+          {/* Main Content */}
+          <div className="flex-1 flex flex-col min-h-0 bg-gray-50">
             <main className="flex-1 overflow-y-auto p-3 md:p-6">
-              {children}
+              <div className="max-w-full">
+                {children}
+              </div>
             </main>
-            <Footer />
+            <div className="flex-shrink-0">
+              <Footer />
+            </div>
           </div>
         </div>
       </div>

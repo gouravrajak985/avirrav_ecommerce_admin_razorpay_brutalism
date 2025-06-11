@@ -1,0 +1,17 @@
+{
+  "name": "Pugly Dashboard",
+  "short_name": "Pugly",
+  "description": "Admin Dashboard for E-commerce Management",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5c6ac4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

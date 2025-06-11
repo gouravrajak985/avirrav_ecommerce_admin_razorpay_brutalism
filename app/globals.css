@@ -54,13 +54,25 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+    /* Ensure proper mobile viewport */
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
   body {
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
-  }
-  
-  html {
+    /* Allow vertical scroll but prevent horizontal */
     overflow-x: hidden;
+    overflow-y: auto;
+    /* Improve mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent zoom on input focus on iOS */
+    -webkit-text-size-adjust: 100%;
   }
 }
 
@@ -149,20 +161,23 @@
 
 /* Mobile responsive improvements */
 @media (max-width: 768px) {
+  /* Fix viewport height issues on mobile */
   .h-screen {
     min-height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
   }
   
   /* Ensure proper scrolling on mobile */
   body {
     overflow-x: hidden;
     overflow-y: auto;
+    position: relative;
   }
   
-  /* Fix mobile viewport issues */
+  /* Fix mobile layout issues */
   .overflow-hidden {
-    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   
   /* Mobile-friendly spacing */
@@ -174,9 +189,23 @@
     @apply pt-4;
   }
   
+  .px-6 {
+    @apply px-4;
+  }
+  
   /* Mobile table improvements */
   .overflow-auto {
     -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent text from being too small on mobile */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Fix mobile button sizes */
+  button {
+    min-height: 44px; /* iOS recommended touch target */
   }
 }
 
@@ -189,6 +218,10 @@
   .md\:grid-cols-3 {
     @apply grid-cols-1;
   }
+  
+  .grid-cols-2 {
+    @apply grid-cols-1;
+  }
 }
 
 /* Mobile navigation improvements */
@@ -199,5 +232,37 @@
   
   .rounded-t-3xl {
     @apply rounded-t-lg;
+  }
+  
+  /* Ensure mobile menu is accessible */
+  .md\:hidden {
+    display: block !important;
+  }
+  
+  .hidden.md\:block {
+    display: none !important;
+  }
+}
+
+/* Fix mobile modal and overlay issues */
+@media (max-width: 768px) {
+  .fixed {
+    position: fixed !important;
+  }
+  
+  /* Ensure modals work properly on mobile */
+  [data-radix-portal] {
+    z-index: 9999;
+  }
+}
+
+/* Improve mobile touch targets */
+@media (max-width: 768px) {
+  a, button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
