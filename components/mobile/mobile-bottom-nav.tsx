@@ -15,28 +15,28 @@ export const MobileBottomNav = ({ stores }: MobileBottomNavProps) => {
 
   const routes = [
     {
-      href: `/${params.storeId}`,
+      href: `/mobile/${params.storeId}`,
       label: 'Home',
       icon: Home,
-      active: pathname === `/${params.storeId}`,
+      active: pathname === `/mobile/${params.storeId}`,
     },
     {
-      href: `/${params.storeId}/orders`,
+      href: `/mobile/${params.storeId}/orders`,
       label: 'Orders',
       icon: ShoppingCart,
-      active: pathname === `/${params.storeId}/orders`,
+      active: pathname === `/mobile/${params.storeId}/orders`,
     },
     {
-      href: `/${params.storeId}/products`,
+      href: `/mobile/${params.storeId}/products`,
       label: 'Products',
       icon: Package,
-      active: pathname === `/${params.storeId}/products`,
+      active: pathname === `/mobile/${params.storeId}/products`,
     },
     {
-      href: `/${params.storeId}/account`,
+      href: `/mobile/${params.storeId}/account`,
       label: 'Account',
       icon: User,
-      active: pathname === `/${params.storeId}/account`,
+      active: pathname === `/mobile/${params.storeId}/account`,
     },
   ];
 

@@ -16,7 +16,7 @@ export const MobileStoreSelector = ({ stores, currentStore }: MobileStoreSelecto
 
   const handleStoreSelect = (storeId: string) => {
     setIsOpen(false);
-    router.push(`/${storeId}`);
+    router.push(`/mobile/${storeId}`);
   };
 
   return (
