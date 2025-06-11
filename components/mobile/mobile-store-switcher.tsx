@@ -54,17 +54,17 @@ export const MobileStoreSwitcher = ({ items = [] }: MobileStoreSwitcherProps) =>
           role='combobox'
           aria-expanded={open}
           aria-label='Select a store'
-          className="w-full justify-between h-11 text-sm rounded-xl border-gray-200 hover:border-gray-300 transition-colors font-medium"
+          className="w-full justify-between h-11 text-base rounded-xl border-gray-200 hover:border-gray-300 transition-colors font-semibold"
         >
           <div className="flex items-center">
             <div className="p-1 bg-indigo-50 rounded-lg mr-3">
               <Store className='h-4 w-4 text-indigo-600' />
             </div>
-            <span className="font-semibold truncate flex-1 text-left text-gray-900">
+            <span className="font-semibold truncate flex-1 text-left text-gray-900 text-base">
               {currentStore?.label || 'Select Store'}
             </span>
           </div>
-          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 text-gray-500 font-medium' />
+          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 text-gray-500' />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-full p-0 bg-white border border-gray-200 shadow-xl rounded-xl'>
@@ -72,7 +72,7 @@ export const MobileStoreSwitcher = ({ items = [] }: MobileStoreSwitcherProps) =>
           <CommandList>
             <CommandInput 
               placeholder='Search stores...' 
-              className="font-medium border-0 focus:ring-0 text-gray-900" 
+              className="font-medium border-0 focus:ring-0 text-gray-900 text-base" 
             />
             <CommandEmpty className="text-center py-6 text-sm text-gray-600">
               <div className="flex flex-col items-center">
@@ -85,13 +85,13 @@ export const MobileStoreSwitcher = ({ items = [] }: MobileStoreSwitcherProps) =>
                 <CommandItem
                   key={store.value}
                   onSelect={() => onStoreSelect(store)}
-                  className='text-sm font-medium hover:bg-gray-50 text-gray-900 cursor-pointer rounded-lg p-3 m-1'
+                  className='text-base font-semibold hover:bg-gray-50 text-gray-900 cursor-pointer rounded-lg p-3 m-1'
                 >
                   <div className="flex items-center w-full">
                     <div className="p-1 bg-gray-100 rounded-lg mr-3">
                       <Store className='h-4 w-4 text-gray-600' />
                     </div>
-                    <span className="flex-1 font-semibold text-gray-900">{store.label}</span>
+                    <span className="flex-1 font-semibold text-gray-900 text-base">{store.label}</span>
                     <Check
                       className={cn(
                         'h-4 w-4 text-indigo-600 font-bold',

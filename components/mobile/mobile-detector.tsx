@@ -69,14 +69,14 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
       
       // Fetch all required data for mobile dashboard
       const [ordersRes, productsRes, storesRes] = await Promise.all([
-        fetch(`/api/${storeId}/orders`).catch(() => ({ json: () => [] })),
-        fetch(`/api/${storeId}/products`).catch(() => ({ json: () => [] })),
-        fetch('/api/stores').catch(() => ({ json: () => [] }))
+        fetch(`/api/${storeId}/orders`).catch(() => ({ ok: false, json: () => Promise.resolve([]) })),
+        fetch(`/api/${storeId}/products`).catch(() => ({ ok: false, json: () => Promise.resolve([]) })),
+        fetch('/api/stores').catch(() => ({ ok: false, json: () => Promise.resolve([]) }))
       ]);
 
-      const orders = await ordersRes.json();
-      const products = await productsRes.json();
-      const allStores = await storesRes.json();
+      const orders = ordersRes.ok ? await ordersRes.json() : [];
+      const products = productsRes.ok ? await productsRes.json() : [];
+      const allStores = storesRes.ok ? await storesRes.json() : [];
 
       // Ensure we have arrays
       const ordersArray = Array.isArray(orders) ? orders : [];
