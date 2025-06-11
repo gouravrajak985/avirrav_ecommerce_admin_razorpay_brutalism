@@ -28,15 +28,21 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
         const isMobileDevice = (isMobileUA && !isTabletUA) || (isMobileScreen && !isTabletUA);
         
         setIsMobile(isMobileDevice);
-        setIsLoading(false);
+        
+        // Fetch data immediately if mobile is detected
+        if (isMobileDevice && storeId) {
+          fetchDashboardData();
+        } else {
+          setIsLoading(false);
+        }
       } catch (error) {
         console.error('Error detecting device:', error);
         setIsLoading(false);
       }
     };
 
-    // Add a small delay to ensure proper hydration
-    const timer = setTimeout(checkDevice, 100);
+    // Immediate check without delay for faster loading
+    checkDevice();
     
     // Listen for resize events
     const handleResize = () => {
@@ -52,97 +58,97 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
     window.addEventListener('resize', handleResize);
     
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [storeId]);
 
-  // Fetch dashboard data when mobile is detected and storeId is available
-  useEffect(() => {
-    if (isMobile && storeId && !isLoading) {
-      const fetchDashboardData = async () => {
-        try {
-          // Fetch all required data for mobile dashboard
-          const [ordersRes, productsRes, storesRes] = await Promise.all([
-            fetch(`/api/${storeId}/orders`),
-            fetch(`/api/${storeId}/products`),
-            fetch('/api/stores') // Fetch all stores for store switcher
-          ]);
+  // Fetch dashboard data function
+  const fetchDashboardData = async () => {
+    try {
+      // Fetch all required data for mobile dashboard
+      const [ordersRes, productsRes, storesRes] = await Promise.all([
+        fetch(`/api/${storeId}/orders`),
+        fetch(`/api/${storeId}/products`),
+        fetch('/api/stores') // Fetch all stores for store switcher
+      ]);
 
-          const orders = await ordersRes.json();
-          const products = await productsRes.json();
-          const allStores = await storesRes.json();
+      const orders = await ordersRes.json();
+      const products = await productsRes.json();
+      const allStores = await storesRes.json();
 
-          // Format data for mobile components
-          const formattedOrders = orders.map((order: any) => ({
-            id: order.id,
-            phone: order.phone,
-            address: order.address,
-            isPaid: order.isPaid,
-            totalPrice: `₹${order.orderItems?.reduce((total: number, item: any) => 
-              total + (Number(item.product?.price || 0) * item.quantity), 0).toFixed(2) || '0.00'}`,
-            products: order.orderItems?.map((item: any) => item.product?.name).join(', ') || 'No products',
-            createdAt: new Date(order.createdAt).toLocaleDateString(),
-            paymentStatus: order.paymentStatus,
-            orderStatus: order.orderStatus,
-          }));
+      // Format data for mobile components
+      const formattedOrders = orders.map((order: any) => ({
+        id: order.id,
+        phone: order.phone,
+        address: order.address,
+        isPaid: order.isPaid,
+        totalPrice: `₹${order.orderItems?.reduce((total: number, item: any) => 
+          total + (Number(item.product?.price || 0) * item.quantity), 0).toFixed(2) || '0.00'}`,
+        products: order.orderItems?.map((item: any) => item.product?.name).join(', ') || 'No products',
+        createdAt: new Date(order.createdAt).toLocaleDateString(),
+        paymentStatus: order.paymentStatus,
+        orderStatus: order.orderStatus,
+      }));
 
-          const formattedProducts = products.map((product: any) => ({
-            id: product.id,
-            name: product.name,
-            price: `₹${Number(product.price).toFixed(2)}`,
-            size: product.size?.name || 'N/A',
-            category: product.category?.name || 'N/A',
-            color: product.color?.value || '#000000',
-            isFeatured: product.isFeatured,
-            isArchived: product.isArchived,
-            createdAt: new Date(product.createdAt).toLocaleDateString(),
-            stockQuantity: product.stockQuantity || 0,
-          }));
+      const formattedProducts = products.map((product: any) => ({
+        id: product.id,
+        name: product.name,
+        price: `₹${Number(product.price).toFixed(2)}`,
+        size: product.size?.name || 'N/A',
+        category: product.category?.name || 'N/A',
+        color: product.color?.value || '#000000',
+        isFeatured: product.isFeatured,
+        isArchived: product.isArchived,
+        createdAt: new Date(product.createdAt).toLocaleDateString(),
+        stockQuantity: product.stockQuantity || 0,
+      }));
 
-          // Format stores for store switcher
-          const formattedStores = Array.isArray(allStores) ? allStores.map((store: any) => ({
-            id: store.id,
-            name: store.name,
-          })) : [];
+      // Format stores for store switcher
+      const formattedStores = Array.isArray(allStores) ? allStores.map((store: any) => ({
+        id: store.id,
+        name: store.name,
+        username: store.username,
+        apiUrl: store.apiUrl,
+        razorpayKeyId: store.razorpayKeyId,
+      })) : [];
 
-          // Find current store
-          const currentStore = formattedStores.find((store: any) => store.id === storeId) || {
-            id: storeId,
-            name: 'Current Store'
-          };
-
-          setDashboardData({
-            orders: formattedOrders,
-            products: formattedProducts,
-            stores: formattedStores,
-            store: currentStore,
-            totalRevenue: `₹${formattedOrders.reduce((total: number, order: any) => 
-              total + parseFloat(order.totalPrice.replace('₹', '')), 0).toFixed(2)}`,
-            salesCount: formattedOrders.filter((order: any) => order.isPaid).length,
-            stockCount: formattedProducts.reduce((total: number, product: any) => 
-              total + product.stockQuantity, 0),
-          });
-        } catch (error) {
-          console.error('Error fetching dashboard data:', error);
-          // Set empty data to prevent infinite loading
-          setDashboardData({
-            orders: [],
-            products: [],
-            stores: [],
-            store: { id: storeId, name: 'Store' },
-            totalRevenue: '₹0.00',
-            salesCount: 0,
-            stockCount: 0,
-          });
-        }
+      // Find current store
+      const currentStore = formattedStores.find((store: any) => store.id === storeId) || {
+        id: storeId,
+        name: 'Current Store'
       };
 
-      fetchDashboardData();
+      setDashboardData({
+        orders: formattedOrders,
+        products: formattedProducts,
+        stores: formattedStores,
+        store: currentStore,
+        totalRevenue: `₹${formattedOrders.reduce((total: number, order: any) => 
+          total + parseFloat(order.totalPrice.replace('₹', '')), 0).toFixed(2)}`,
+        salesCount: formattedOrders.filter((order: any) => order.isPaid).length,
+        stockCount: formattedProducts.reduce((total: number, product: any) => 
+          total + product.stockQuantity, 0),
+      });
+      
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      // Set empty data to prevent infinite loading
+      setDashboardData({
+        orders: [],
+        products: [],
+        stores: [],
+        store: { id: storeId, name: 'Store' },
+        totalRevenue: '₹0.00',
+        salesCount: 0,
+        stockCount: 0,
+      });
+      setIsLoading(false);
     }
-  }, [isMobile, storeId, isLoading]);
+  };
 
-  if (isLoading) {
+  // Show loading only briefly for mobile
+  if (isLoading && isMobile) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center space-y-4">
@@ -169,6 +175,6 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
     );
   }
 
-  // Show desktop version for non-mobile devices or when mobile data isn't ready
+  // Show desktop version for non-mobile devices
   return <>{children}</>;
 };

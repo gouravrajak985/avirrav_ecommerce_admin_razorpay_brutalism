@@ -7,7 +7,6 @@ import { MobileHome } from './mobile-home';
 import { MobileOrders } from './mobile-orders';
 import { MobileProducts } from './mobile-products';
 import { MobileAccount } from './mobile-account';
-import { Loader } from '@/components/ui/loader';
 
 interface MobileDashboardProps {
   storeId: string;
@@ -31,28 +30,11 @@ export const MobileDashboard = ({
   store,
 }: MobileDashboardProps) => {
   const [activeTab, setActiveTab] = useState('home');
-  const [isLoading, setIsLoading] = useState(true);
   const { user } = useUser();
 
-  useEffect(() => {
-    // Simulate loading time for better UX
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center space-y-4">
-          <Loader size="large" />
-          <p className="text-sm text-gray-600">Loading mobile dashboard...</p>
-        </div>
-      </div>
-    );
-  }
+  const handleQuickAction = (action: string) => {
+    setActiveTab(action);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -63,6 +45,7 @@ export const MobileDashboard = ({
             salesCount={salesCount}
             stockCount={stockCount}
             stores={stores}
+            onQuickAction={handleQuickAction}
           />
         );
       case 'orders':
@@ -78,6 +61,7 @@ export const MobileDashboard = ({
             salesCount={salesCount}
             stockCount={stockCount}
             stores={stores}
+            onQuickAction={handleQuickAction}
           />
         );
     }

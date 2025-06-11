@@ -1,7 +1,10 @@
 'use client';
 
-import { User, Store, CreditCard, Settings, Globe, Key } from 'lucide-react';
+import { User, Store, CreditCard, Settings, Globe, LogOut } from 'lucide-react';
 import { MobileAccountCard } from './mobile-account-card';
+import { Button } from '@/components/ui/button';
+import { useClerk } from '@clerk/nextjs';
+import { toast } from 'react-hot-toast';
 
 interface Store {
   id: string;
@@ -17,6 +20,19 @@ interface MobileAccountProps {
 }
 
 export const MobileAccount = ({ store, user }: MobileAccountProps) => {
+  const { signOut } = useClerk();
+
+  const handleLogout = () => {
+    try {
+      signOut(() => {
+        toast.success('Logged out successfully');
+        window.location.href = '/sign-in';
+      });
+    } catch (error) {
+      toast.error('Error logging out');
+    }
+  };
+
   const storeDetails = [
     { label: 'Store Name', value: store.name || 'Not set' },
     { label: 'Username', value: store.username || 'Not set' },
@@ -24,7 +40,6 @@ export const MobileAccount = ({ store, user }: MobileAccountProps) => {
   ];
 
   const userDetails = [
-    { label: 'Full Name', value: user?.fullName || 'Not available' },
     { label: 'Email', value: user?.primaryEmailAddress?.emailAddress || 'Not available' },
     { label: 'User ID', value: user?.id || 'Not available' },
   ];
@@ -76,6 +91,18 @@ export const MobileAccount = ({ store, user }: MobileAccountProps) => {
           icon={Settings}
           items={systemDetails}
         />
+      </div>
+
+      {/* Logout Button */}
+      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <Button
+          onClick={handleLogout}
+          variant="destructive"
+          className="w-full flex items-center justify-center space-x-2"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>Logout</span>
+        </Button>
       </div>
 
       {/* Notice */}
