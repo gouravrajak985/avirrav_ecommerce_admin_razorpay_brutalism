@@ -11,16 +11,21 @@ interface MobileAccountCardProps {
 
 export const MobileAccountCard = ({ title, icon: Icon, items }: MobileAccountCardProps) => {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-      <h3 className="text-sm font-medium text-gray-700 mb-3 flex items-center">
-        <Icon className="h-4 w-4 mr-2" />
-        {title}
-      </h3>
-      <div className="space-y-3">
+    <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+      <div className="flex items-center mb-4 pb-3 border-b border-gray-100">
+        <div className="p-2 bg-gray-50 rounded-lg mr-3">
+          <Icon className="h-4 w-4 text-gray-600" />
+        </div>
+        <h3 className="text-base font-semibold text-gray-900">{title}</h3>
+      </div>
+      
+      <div className="space-y-4">
         {items.map((item, index) => (
-          <div key={index} className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">{item.label}</span>
-            <span className="text-sm font-medium text-gray-900 text-right max-w-[60%] truncate">
+          <div key={index} className="flex justify-between items-start">
+            <span className="text-sm font-medium text-gray-600 flex-shrink-0 mr-3">
+              {item.label}
+            </span>
+            <span className="text-sm text-gray-900 text-right max-w-[60%] break-words font-medium">
               {item.value}
             </span>
           </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { DollarSign, ShoppingCart, Package, Store } from 'lucide-react';
+import { DollarSign, ShoppingCart, Package, Store, TrendingUp, BarChart3 } from 'lucide-react';
 import { MobileStatsCard } from './mobile-stats-card';
 import { MobileStoreSwitcher } from './mobile-store-switcher';
 
@@ -21,66 +21,94 @@ export const MobileHome = ({
 }: MobileHomeProps) => {
   return (
     <div className="space-y-6 pb-20">
-      {/* Header with Store Switcher */}
-      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">Dashboard Overview</h2>
-        <div className="space-y-2">
-          <span className="text-sm text-gray-600">Current Store:</span>
+      {/* Header with Store Switcher - Polaris Style */}
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center mb-4">
+          <div className="p-2 bg-indigo-50 rounded-lg mr-3">
+            <BarChart3 className="h-5 w-5 text-indigo-600" />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">Dashboard</h2>
+            <p className="text-sm text-gray-600">Overview of your business</p>
+          </div>
+        </div>
+        
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-gray-700">Current Store</span>
+            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Active</span>
+          </div>
           <MobileStoreSwitcher items={stores} />
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 gap-4">
-        <MobileStatsCard
-          title="Total Revenue"
-          value={totalRevenue}
-          icon={DollarSign}
-          color="green"
-        />
-        <MobileStatsCard
-          title="Total Orders"
-          value={salesCount.toString()}
-          icon={ShoppingCart}
-          color="blue"
-        />
-        <MobileStatsCard
-          title="Stock Items"
-          value={stockCount.toString()}
-          icon={Package}
-          color="purple"
-        />
+      {/* Stats Cards - Polaris Design */}
+      <div className="space-y-4">
+        <h3 className="text-base font-semibold text-gray-900 px-1">Key Metrics</h3>
+        <div className="grid grid-cols-1 gap-4">
+          <MobileStatsCard
+            title="Total Revenue"
+            value={totalRevenue}
+            icon={DollarSign}
+            color="green"
+          />
+          <MobileStatsCard
+            title="Total Orders"
+            value={salesCount.toString()}
+            icon={ShoppingCart}
+            color="blue"
+          />
+          <MobileStatsCard
+            title="Stock Items"
+            value={stockCount.toString()}
+            icon={Package}
+            color="purple"
+          />
+        </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-        <h3 className="text-sm font-medium text-gray-700 mb-3">Quick Actions</h3>
+      {/* Quick Actions - Polaris Style */}
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center mb-4">
+          <TrendingUp className="h-5 w-5 text-indigo-600 mr-2" />
+          <h3 className="text-base font-semibold text-gray-900">Quick Actions</h3>
+        </div>
+        
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => onQuickAction('orders')}
-            className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center hover:bg-blue-100 transition-colors"
+            className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center hover:bg-blue-100 transition-all duration-200 active:scale-95"
           >
-            <ShoppingCart className="h-6 w-6 text-blue-600 mx-auto mb-1" />
-            <p className="text-xs font-medium text-blue-600">View Orders</p>
+            <div className="p-2 bg-blue-100 rounded-lg mx-auto mb-2 w-fit">
+              <ShoppingCart className="h-5 w-5 text-blue-600" />
+            </div>
+            <p className="text-sm font-medium text-blue-700">View Orders</p>
+            <p className="text-xs text-blue-600 mt-1">{salesCount} orders</p>
           </button>
+          
           <button
             onClick={() => onQuickAction('products')}
-            className="bg-purple-50 border border-purple-200 rounded-lg p-3 text-center hover:bg-purple-100 transition-colors"
+            className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-center hover:bg-indigo-100 transition-all duration-200 active:scale-95"
           >
-            <Package className="h-6 w-6 text-purple-600 mx-auto mb-1" />
-            <p className="text-xs font-medium text-purple-600">View Products</p>
+            <div className="p-2 bg-indigo-100 rounded-lg mx-auto mb-2 w-fit">
+              <Package className="h-5 w-5 text-indigo-600" />
+            </div>
+            <p className="text-sm font-medium text-indigo-700">View Products</p>
+            <p className="text-xs text-indigo-600 mt-1">{stockCount} in stock</p>
           </button>
         </div>
       </div>
 
-      {/* Mobile Notice */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      {/* Mobile Notice - Polaris Style */}
+      <div className="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-5">
         <div className="flex items-start space-x-3">
-          <Store className="h-5 w-5 text-blue-600 mt-0.5" />
-          <div>
-            <h3 className="text-sm font-medium text-blue-900">Mobile Dashboard</h3>
-            <p className="text-xs text-blue-700 mt-1">
-              You're using the mobile-optimized dashboard. Switch to desktop for full admin features.
+          <div className="p-2 bg-indigo-100 rounded-lg">
+            <Store className="h-5 w-5 text-indigo-600" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-sm font-semibold text-indigo-900 mb-1">Mobile Dashboard</h3>
+            <p className="text-xs text-indigo-700 leading-relaxed">
+              You're using the mobile-optimized dashboard. For full admin features and editing capabilities, please use the desktop version.
             </p>
           </div>
         </div>

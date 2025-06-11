@@ -18,7 +18,7 @@ export const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 md:hidden">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 md:hidden shadow-lg">
       <div className="grid grid-cols-4 h-16">
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -29,19 +29,25 @@ export const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "flex flex-col items-center justify-center space-y-1 transition-colors",
+                "flex flex-col items-center justify-center space-y-1 transition-all duration-200 relative",
+                "min-h-[44px] touch-manipulation",
                 isActive 
-                  ? "text-blue-600 bg-blue-50" 
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "text-indigo-600 bg-indigo-50" 
+                  : "text-gray-500 hover:text-gray-700 active:bg-gray-50"
               )}
             >
+              {/* Active indicator */}
+              {isActive && (
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-indigo-600 rounded-full" />
+              )}
+              
               <Icon className={cn(
-                "h-5 w-5",
-                isActive ? "text-blue-600" : "text-gray-500"
+                "h-5 w-5 transition-colors duration-200",
+                isActive ? "text-indigo-600" : "text-gray-500"
               )} />
               <span className={cn(
-                "text-xs font-medium",
-                isActive ? "text-blue-600" : "text-gray-500"
+                "text-xs font-medium transition-colors duration-200",
+                isActive ? "text-indigo-600" : "text-gray-500"
               )}>
                 {tab.label}
               </span>
