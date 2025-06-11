@@ -57,11 +57,10 @@
   body {
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
-    overflow: hidden; /* Prevent body scroll */
   }
   
   html {
-    overflow: hidden; /* Prevent html scroll */
+    overflow-x: hidden;
   }
 }
 
@@ -148,13 +147,57 @@
   @apply text-caption text-destructive font-medium;
 }
 
-/* Mobile responsive fixes */
+/* Mobile responsive improvements */
 @media (max-width: 768px) {
-  body {
-    overflow: auto;
+  .h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
   }
   
-  html {
-    overflow: auto;
+  /* Ensure proper scrolling on mobile */
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  /* Fix mobile viewport issues */
+  .overflow-hidden {
+    overflow: visible;
+  }
+  
+  /* Mobile-friendly spacing */
+  .p-8 {
+    @apply p-4;
+  }
+  
+  .pt-6 {
+    @apply pt-4;
+  }
+  
+  /* Mobile table improvements */
+  .overflow-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Responsive grid improvements */
+@media (max-width: 640px) {
+  .grid-cols-3 {
+    @apply grid-cols-1;
+  }
+  
+  .md\:grid-cols-3 {
+    @apply grid-cols-1;
+  }
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+  .w-56 {
+    @apply w-full;
+  }
+  
+  .rounded-t-3xl {
+    @apply rounded-t-lg;
   }
 }
