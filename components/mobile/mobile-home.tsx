@@ -67,7 +67,7 @@ export const MobileHome = ({
         </div>
       </div>
 
-      {/* Quick Actions - Polaris Style */}
+      {/* Quick Actions - Improved Polaris Style */}
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
         <div className="flex items-center mb-4">
           <TrendingUp className="h-5 w-5 text-indigo-600 mr-2" />
@@ -77,24 +77,32 @@ export const MobileHome = ({
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => onQuickAction('orders')}
-            className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center hover:bg-blue-100 transition-all duration-200 active:scale-95"
+            className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-left hover:bg-blue-100 transition-all duration-200 active:scale-95"
           >
-            <div className="p-2 bg-blue-100 rounded-lg mx-auto mb-2 w-fit">
-              <ShoppingCart className="h-5 w-5 text-blue-600" />
+            <div className="flex items-center mb-3">
+              <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                <ShoppingCart className="h-5 w-5 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-blue-700">View Orders</p>
+                <p className="text-xs text-blue-600 mt-1">{salesCount} orders</p>
+              </div>
             </div>
-            <p className="text-sm font-medium text-blue-700">View Orders</p>
-            <p className="text-xs text-blue-600 mt-1">{salesCount} orders</p>
           </button>
           
           <button
             onClick={() => onQuickAction('products')}
-            className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-center hover:bg-indigo-100 transition-all duration-200 active:scale-95"
+            className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-left hover:bg-indigo-100 transition-all duration-200 active:scale-95"
           >
-            <div className="p-2 bg-indigo-100 rounded-lg mx-auto mb-2 w-fit">
-              <Package className="h-5 w-5 text-indigo-600" />
+            <div className="flex items-center mb-3">
+              <div className="p-2 bg-indigo-100 rounded-lg mr-3">
+                <Package className="h-5 w-5 text-indigo-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-indigo-700">View Products</p>
+                <p className="text-xs text-indigo-600 mt-1">{stockCount} in stock</p>
+              </div>
             </div>
-            <p className="text-sm font-medium text-indigo-700">View Products</p>
-            <p className="text-xs text-indigo-600 mt-1">{stockCount} in stock</p>
           </button>
         </div>
       </div>

@@ -41,7 +41,10 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
       }
     };
 
-    // Immediate check without delay for faster loading
+    // Add a minimum loading time to prevent flashing
+    const minLoadingTime = 1000; // 1 second
+    const startTime = Date.now();
+
     checkDevice();
     
     // Listen for resize events
@@ -73,7 +76,9 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
         fetch(`/api/${storeId}/products`).catch(() => ({ ok: false, json: () => Promise.resolve([]) })),
         fetch('/api/stores').catch(() => ({ ok: false, json: () => Promise.resolve([]) }))
       ]);
-
+      console.log('Orders Response:', ordersRes);
+      console.log('Products Response:', productsRes);
+      console.log('Stores Response:', storesRes);
       const orders = ordersRes.ok ? await ordersRes.json() : [];
       const products = productsRes.ok ? await productsRes.json() : [];
       const allStores = storesRes.ok ? await storesRes.json() : [];
@@ -169,19 +174,26 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
     }
   };
 
-  // Show loading only briefly for mobile
-  if (isLoading && isMobile) {
+  // Show loading animation while detecting mobile and fetching data
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="text-sm text-gray-600 font-medium">Loading dashboard...</p>
+        <div className="flex flex-col items-center space-y-6">
+          {/* Polaris-style loading animation */}
+          <div className="relative">
+            <div className="w-12 h-12 border-4 border-indigo-100 rounded-full animate-spin"></div>
+            <div className="absolute top-0 left-0 w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <div className="text-center space-y-2">
+            <h3 className="text-lg font-semibold text-gray-900">Loading Dashboard</h3>
+            <p className="text-sm text-gray-600 animate-pulse">Preparing your experience...</p>
+          </div>
         </div>
       </div>
     );
   }
 
-  // Automatically show mobile dashboard if on mobile device
+  // Show mobile dashboard if on mobile device and data is loaded
   if (isMobile && dashboardData && storeId) {
     return (
       <MobileDashboard
