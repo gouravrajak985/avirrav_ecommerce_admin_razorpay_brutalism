@@ -13,21 +13,33 @@
   "icons": [
     {
       "src": "/favicon.ico",
-      "sizes": "16x16 32x32 48x48",
+      "sizes": "16x16",
       "type": "image/x-icon",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon",
+      "purpose": "any"
     },
     {
       "src": "/favicon.ico",
       "sizes": "192x192",
-      "type": "image/x-icon",
-      "purpose": "any"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/favicon.ico",
       "sizes": "512x512",
-      "type": "image/x-icon",
-      "purpose": "any"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "shortcuts": [
@@ -40,11 +52,15 @@
     },
     {
       "name": "Orders",
-      "short_name": "Orders",
+      "short_name": "Orders", 
       "description": "Manage orders",
       "url": "/orders",
       "icons": [{ "src": "/favicon.ico", "sizes": "192x192" }]
     }
   ],
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "dir": "ltr",
+  "display_override": ["standalone", "minimal-ui"],
+  "edge_side_panel": {}
 }

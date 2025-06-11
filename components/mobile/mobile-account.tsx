@@ -115,7 +115,7 @@ export const MobileAccount = ({ store, user }: MobileAccountProps) => {
         />
       </div>
 
-      {/* Logout Section - Polaris Style */}
+      {/* Logout Section - Polaris Style with Better Visibility */}
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
         <div className="mb-4">
           <h3 className="text-base font-semibold text-gray-900 mb-1">Session Management</h3>
@@ -126,17 +126,17 @@ export const MobileAccount = ({ store, user }: MobileAccountProps) => {
           onClick={handleLogout}
           disabled={isLoggingOut}
           variant="destructive"
-          className="w-full flex items-center justify-center space-x-2 h-12 rounded-lg font-medium"
+          className="w-full flex items-center justify-center space-x-2 h-12 rounded-lg font-semibold text-base bg-red-600 hover:bg-red-700 text-white border-0 shadow-sm"
         >
           {isLoggingOut ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-              <span>Signing out...</span>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <span className="font-semibold">Signing out...</span>
             </>
           ) : (
             <>
-              <LogOut className="h-4 w-4" />
-              <span>Sign Out</span>
+              <LogOut className="h-5 w-5" />
+              <span className="font-semibold">Sign Out</span>
             </>
           )}
         </Button>
