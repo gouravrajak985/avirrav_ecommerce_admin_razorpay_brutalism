@@ -27,7 +27,6 @@ const formSchema = z.object({
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
-
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,12 +35,11 @@ export const StoreModal = () => {
       name: '',
     },
   });
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-
       const response = await axios.post('/api/stores', values);
-
       window.location.assign(`/${response.data.id}`);
     } catch (error) {
       toast.error('Something went wrong');
@@ -58,10 +56,10 @@ export const StoreModal = () => {
       onClose={storeModal.onClose}
     >
       <div className="mt-2">
-        <div className="p-4 rounded-lg border border-border bg-surface-subdued">
-          <div className="flex items-center space-x-3 mb-4 pb-2 border-b border-border">
-            <Store className="h-5 w-5 text-primary" />
-            <h3 className="font-medium text-primary">New Store Details</h3>
+        <div className="p-4 rounded-lg border border-gray-200 bg-gray-50">
+          <div className="flex items-center space-x-3 mb-4 pb-2 border-b border-gray-200">
+            <Store className="h-5 w-5 text-blue-600" />
+            <h3 className="font-medium text-blue-600">New Store Details</h3>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -94,7 +92,6 @@ export const StoreModal = () => {
                 <Button 
                   disabled={loading} 
                   type='submit'
-                  variant="primary"
                 >
                   Create Store
                 </Button>

@@ -147,3 +147,14 @@
 .polaris-form-error {
   @apply text-caption text-destructive font-medium;
 }
+
+/* Mobile responsive fixes */
+@media (max-width: 768px) {
+  body {
+    overflow: auto;
+  }
+  
+  html {
+    overflow: auto;
+  }
+}
