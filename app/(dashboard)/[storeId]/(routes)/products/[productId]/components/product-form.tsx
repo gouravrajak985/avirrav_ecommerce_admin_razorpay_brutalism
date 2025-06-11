@@ -160,20 +160,18 @@ export const ProductForm = ({
     setTaxes(newTaxes);
   };
 
+  const costPerItem = form.watch('costPerItem');
+  const profitMargin = form.watch('profitMargin');
+
   useEffect(() => {
-    const costPerItem = Number(form.getValues('costPerItem')) || 0;
-    const profitMargin = Number(form.getValues('profitMargin')) || 0;
-    
-    const profit = (costPerItem * profitMargin) / 100;
-    const basePrice = costPerItem + profit;
-    
+    const basePrice = Number(costPerItem) * (1 + Number(profitMargin) / 100);
     const totalTax = taxes.reduce((acc, tax) => {
       return acc + (basePrice * tax.value) / 100;
     }, 0);
 
     const totalPrice = Number((basePrice + totalTax).toFixed(2));
     form.setValue('price', totalPrice);
-  }, [form.watch('costPerItem'), form.watch('profitMargin'), taxes]);
+  }, [costPerItem, profitMargin, taxes, form]);
 
   const onSubmit = async (data: ProductFormValues) => {
     try {

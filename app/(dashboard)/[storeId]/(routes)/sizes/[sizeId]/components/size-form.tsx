@@ -126,7 +126,7 @@ export const SizeForm = ({ initialData }: SizeFormProps) => {
                 <FormItem>
                   <FormLabel>Size Name <span className="text-red-500">*</span></FormLabel>
                   <FormDescription>
-                    Enter a descriptive name for this size that customers will easily understand. Examples: "Small", "Medium", "Large", "Extra Large"
+                    Enter a descriptive name for this size that customers will easily understand. Examples: &quot;Small&quot;, &quot;Medium&quot;, &quot;Large&quot;, &quot;Extra Large&quot;
                   </FormDescription>
                   <FormControl>
                     <Input
@@ -146,12 +146,12 @@ export const SizeForm = ({ initialData }: SizeFormProps) => {
                 <FormItem>
                   <FormLabel>Size Value <span className="text-red-500">*</span></FormLabel>
                   <FormDescription>
-                    Enter the actual size value or measurement. This can be abbreviations (S, M, L, XL) or specific measurements (32", 34", 36"). Keep it consistent across your products.
+                    Enter the actual size value or measurement. This can be abbreviations (S, M, L, XL) or specific measurements (32&quot;, 34&quot;, 36&quot;). Keep it consistent across your products.
                   </FormDescription>
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder='e.g., S, M, L, XL or 32", 34", 36"'
+                      placeholder='e.g., S, M, L, XL or 32&quot;, 34&quot;, 36&quot;'
                       {...field}
                     />
                   </FormControl>

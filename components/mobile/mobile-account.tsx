@@ -151,7 +151,7 @@ export const MobileAccount = ({ store, user }: MobileAccountProps) => {
           <div className="flex-1">
             <h3 className="text-sm font-semibold text-blue-900 mb-1">Mobile View Notice</h3>
             <p className="text-xs text-blue-700 leading-relaxed">
-              You're viewing account settings in read-only mode. To make changes to your store settings, payment configuration, or user details, please use the desktop version of the dashboard.
+              You&apos;re viewing account settings in read-only mode. To make changes to your store settings, payment configuration, or user details, please use the desktop version of the dashboard.
             </p>
           </div>
         </div>

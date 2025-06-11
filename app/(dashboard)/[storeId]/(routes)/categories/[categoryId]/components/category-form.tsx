@@ -142,7 +142,7 @@ export const CategoryForm = ({
                 <FormItem>
                   <FormLabel>Category Name <span className="text-red-500">*</span></FormLabel>
                   <FormDescription>
-                    Enter a descriptive name for your category. This will help customers find products easily. Examples: "Electronics", "Clothing", "Home & Garden"
+                    Enter a descriptive name for your category. This will help customers find products easily. Examples: &quot;Electronics&quot;, &quot;Clothing&quot;, &quot;Home &amp; Garden&quot;
                   </FormDescription>
                   <FormControl>
                     <Input

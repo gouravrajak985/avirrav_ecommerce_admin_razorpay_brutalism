@@ -116,7 +116,7 @@ export const MobileHome = ({
           <div className="flex-1">
             <h3 className="text-sm font-semibold text-indigo-900 mb-1">Mobile Dashboard</h3>
             <p className="text-xs text-indigo-700 leading-relaxed">
-              You're using the mobile-optimized dashboard. For full admin features and editing capabilities, please use the desktop version.
+              You&apos;re using the mobile-optimized dashboard. For full admin features and editing capabilities, please use the desktop version.
             </p>
           </div>
         </div>

@@ -129,7 +129,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Color Name <span className="text-red-500">*</span></FormLabel>
                   <FormDescription>
-                    Enter a descriptive name for this color that customers will recognize. Examples: "Red", "Navy Blue", "Forest Green", "Sunset Orange"
+                    Enter a descriptive name for this color that customers will recognize. Examples: &quot;Red&quot;, &quot;Navy Blue&quot;, &quot;Forest Green&quot;, &quot;Sunset Orange&quot;
                   </FormDescription>
                   <FormControl>
                     <Input
