@@ -5,8 +5,8 @@
 @layer base {
   :root {
     /* Official Polaris Design System Colors */
-    --background: 17 24 39; /* #111827 - Gray 900 */
-    --foreground: 243 244 246; /* #f3f4f6 - Gray 100 */
+    --background: 255 255 255; /* #ffffff - White */
+    --foreground: 33 43 54; /* #212b36 - Dark text */
     --card: 255 255 255; /* #ffffff - White */
     --card-foreground: 33 43 54; /* #212b36 - Text */
     --popover: 255 255 255; /* #ffffff - White */
@@ -79,11 +79,39 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    /* Ensure text is always visible */
+    color: rgb(33, 43, 54); /* Dark text color */
   }
 
   /* Ensure root element takes full height */
   #__next {
     height: 100%;
+  }
+
+  /* Ensure main content text is always visible */
+  main {
+    color: rgb(33, 43, 54) !important;
+  }
+
+  /* Fix text visibility in main content areas */
+  .main-content {
+    background-color: rgb(255, 255, 255);
+    color: rgb(33, 43, 54);
+  }
+
+  /* Ensure headings are visible */
+  h1, h2, h3, h4, h5, h6 {
+    color: rgb(33, 43, 54) !important;
+  }
+
+  /* Ensure paragraphs and text are visible */
+  p, span, div {
+    color: inherit;
+  }
+
+  /* Fix muted text to be more visible */
+  .text-muted-foreground {
+    color: rgb(99, 115, 129) !important;
   }
 }
 
@@ -139,6 +167,25 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: rgba(156, 163, 175, 0.7);
   }
+
+  /* Ensure text visibility utilities */
+  .text-visible {
+    color: rgb(33, 43, 54) !important;
+  }
+
+  .text-visible-muted {
+    color: rgb(99, 115, 129) !important;
+  }
+
+  /* Main content area styling */
+  .content-area {
+    background-color: rgb(255, 255, 255);
+    color: rgb(33, 43, 54);
+  }
+
+  .content-area * {
+    color: inherit;
+  }
 }
 
 /* Remove neobrutalism styles */
@@ -162,18 +209,22 @@
 /* Typography improvements */
 .polaris-text-heading {
   @apply text-heading font-semibold text-foreground;
+  color: rgb(33, 43, 54) !important;
 }
 
 .polaris-text-subheading {
   @apply text-subheading font-semibold text-foreground;
+  color: rgb(33, 43, 54) !important;
 }
 
 .polaris-text-body {
   @apply text-body text-foreground;
+  color: rgb(33, 43, 54) !important;
 }
 
 .polaris-text-caption {
   @apply text-caption text-muted-foreground;
+  color: rgb(99, 115, 129) !important;
 }
 
 /* Form improvements */
@@ -183,10 +234,12 @@
 
 .polaris-form-label {
   @apply text-subheading font-medium text-foreground;
+  color: rgb(33, 43, 54) !important;
 }
 
 .polaris-form-help {
   @apply text-caption text-muted-foreground;
+  color: rgb(99, 115, 129) !important;
 }
 
 .polaris-form-error {

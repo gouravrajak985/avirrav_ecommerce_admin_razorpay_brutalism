@@ -46,17 +46,17 @@ export default async function DashboardLayout({
         {/* Bottom Section with curved border - White background */}
         <div className="flex-1 flex rounded-t-3xl bg-white shadow-lg relative overflow-hidden">
           {/* Left Sidebar - Hidden on mobile */}
-          <div className="hidden md:block w-56 flex-shrink-0 bg-gray-100 border-r border-gray-200 overflow-hidden">
+          <div className="hidden md:block w-56 flex-shrink-0 bg-white border-r border-gray-200 overflow-hidden">
             <div className="h-full overflow-y-auto">
               <AdminSidebar />
             </div>
           </div>
 
-          {/* Main Content - Scrollable area */}
-          <div className="flex-1 flex flex-col min-h-0 bg-gray-50 overflow-hidden">
+          {/* Main Content - Scrollable area with proper text colors */}
+          <div className="flex-1 flex flex-col min-h-0 bg-white overflow-hidden">
             <main className="flex-1 overflow-y-auto">
               <div className="p-3 md:p-6">
-                <div className="max-w-full">
+                <div className="max-w-full text-gray-900">
                   {children}
                 </div>
               </div>

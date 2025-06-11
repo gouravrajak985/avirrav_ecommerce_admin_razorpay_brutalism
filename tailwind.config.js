@@ -17,12 +17,12 @@ module.exports = {
     },
     extend: {
       colors: {
-        // Official Polaris Color System
+        // Official Polaris Color System with proper contrast
         border: "223 227 232", /* #dfe3e8 */
         input: "223 227 232", /* #dfe3e8 */
         ring: "92 106 196", /* #5c6ac4 */
-        background: "244 246 248", /* #f4f6f8 */
-        foreground: "33 43 54", /* #212b36 */
+        background: "255 255 255", /* #ffffff - White background */
+        foreground: "33 43 54", /* #212b36 - Dark text for contrast */
         card: "255 255 255", /* #ffffff */
         "card-foreground": "33 43 54", /* #212b36 */
         popover: "255 255 255", /* #ffffff */
