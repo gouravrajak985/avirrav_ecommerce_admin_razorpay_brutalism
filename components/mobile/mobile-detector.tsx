@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Smartphone, Monitor, Tablet } from 'lucide-react';
+import { MobileDashboard } from './mobile-dashboard';
 
 interface MobileDetectorProps {
   children: React.ReactNode;
@@ -13,16 +14,17 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showMobileMessage, setShowMobileMessage] = useState(false);
   const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [useMobileDashboard, setUseMobileDashboard] = useState(false);
+  const [dashboardData, setDashboardData] = useState<any>(null);
 
   useEffect(() => {
     const checkDevice = () => {
       try {
         const userAgent = navigator.userAgent;
         const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
         
         // More comprehensive mobile detection
-        const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
         const isTabletUA = /iPad|Android(?=.*Tablet)|Tablet/i.test(userAgent);
         const isMobileScreen = screenWidth < 768;
         const isTabletScreen = screenWidth >= 768 && screenWidth < 1024;
@@ -73,6 +75,68 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
     };
   }, [deviceType]);
 
+  // Fetch dashboard data when mobile dashboard is requested
+  useEffect(() => {
+    if (useMobileDashboard && storeId) {
+      const fetchDashboardData = async () => {
+        try {
+          // Fetch all required data for mobile dashboard
+          const [ordersRes, productsRes, storeRes] = await Promise.all([
+            fetch(`/api/${storeId}/orders`),
+            fetch(`/api/${storeId}/products`),
+            fetch(`/api/stores/${storeId}`)
+          ]);
+
+          const orders = await ordersRes.json();
+          const products = await productsRes.json();
+          const store = await storeRes.json();
+
+          // Format data for mobile components
+          const formattedOrders = orders.map((order: any) => ({
+            id: order.id,
+            phone: order.phone,
+            address: order.address,
+            isPaid: order.isPaid,
+            totalPrice: `₹${order.orderItems?.reduce((total: number, item: any) => 
+              total + (Number(item.product?.price || 0) * item.quantity), 0).toFixed(2) || '0.00'}`,
+            products: order.orderItems?.map((item: any) => item.product?.name).join(', ') || 'No products',
+            createdAt: new Date(order.createdAt).toLocaleDateString(),
+            paymentStatus: order.paymentStatus,
+            orderStatus: order.orderStatus,
+          }));
+
+          const formattedProducts = products.map((product: any) => ({
+            id: product.id,
+            name: product.name,
+            price: `₹${Number(product.price).toFixed(2)}`,
+            size: product.size?.name || 'N/A',
+            category: product.category?.name || 'N/A',
+            color: product.color?.value || '#000000',
+            isFeatured: product.isFeatured,
+            isArchived: product.isArchived,
+            createdAt: new Date(product.createdAt).toLocaleDateString(),
+            stockQuantity: product.stockQuantity || 0,
+          }));
+
+          setDashboardData({
+            orders: formattedOrders,
+            products: formattedProducts,
+            store,
+            totalRevenue: `₹${formattedOrders.reduce((total: number, order: any) => 
+              total + parseFloat(order.totalPrice.replace('₹', '')), 0).toFixed(2)}`,
+            salesCount: formattedOrders.filter((order: any) => order.isPaid).length,
+            stockCount: formattedProducts.reduce((total: number, product: any) => 
+              total + product.stockQuantity, 0),
+          });
+        } catch (error) {
+          console.error('Error fetching dashboard data:', error);
+        }
+      };
+
+      fetchDashboardData();
+    }
+  }, [useMobileDashboard, storeId]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -81,6 +145,22 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
           <p className="text-sm text-gray-600">Loading dashboard...</p>
         </div>
       </div>
+    );
+  }
+
+  // Show mobile dashboard if user chose to use it
+  if (useMobileDashboard && dashboardData && storeId) {
+    return (
+      <MobileDashboard
+        storeId={storeId}
+        stores={[]} // Will be passed from parent
+        totalRevenue={dashboardData.totalRevenue}
+        salesCount={dashboardData.salesCount}
+        stockCount={dashboardData.stockCount}
+        orders={dashboardData.orders}
+        products={dashboardData.products}
+        store={dashboardData.store}
+      />
     );
   }
 
@@ -96,22 +176,31 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
             </div>
             <h1 className="text-xl font-bold text-gray-900 mb-2">Mobile Dashboard</h1>
             <p className="text-gray-600 text-sm leading-relaxed">
-              You're accessing the admin dashboard on a mobile device. For the best experience, we recommend using a desktop or tablet.
+              Choose your preferred mobile experience for managing your store.
             </p>
           </div>
           
           <div className="space-y-3">
             <button
-              onClick={() => setShowMobileMessage(false)}
+              onClick={() => {
+                setUseMobileDashboard(true);
+                setShowMobileMessage(false);
+              }}
               className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
             >
-              Continue to Dashboard
+              Use Mobile Dashboard
             </button>
             
-            <div className="text-xs text-gray-500 space-y-1">
-              <p>✓ View-only mode optimized</p>
-              <p>✓ Touch-friendly interface</p>
-              <p>⚠ Some features may be limited</p>
+            <button
+              onClick={() => setShowMobileMessage(false)}
+              className="w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
+            >
+              Continue to Desktop View
+            </button>
+            
+            <div className="text-xs text-gray-500 space-y-1 mt-4">
+              <p>📱 Mobile: Optimized navigation & read-only</p>
+              <p>🖥️ Desktop: Full admin features</p>
             </div>
           </div>
         </div>
