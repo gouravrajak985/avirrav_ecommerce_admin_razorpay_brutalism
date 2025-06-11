@@ -14,7 +14,6 @@ export const MobileDetector = ({ children, storeId, stores }: MobileDetectorProp
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState<any>(null);
-  console.log('MobileDetector initialized with storeId:', storeId);
   useEffect(() => {
     const checkDevice = () => {
       try {
