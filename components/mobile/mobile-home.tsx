@@ -19,7 +19,7 @@ export const MobileHome = ({ totalRevenue, salesCount, stockCount, stores }: Mob
         <h2 className="text-lg font-semibold text-gray-900 mb-3">Dashboard Overview</h2>
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-600">Current Store:</span>
-          <div className="flex-1 ml-3">
+          <div className="flex-1 ml-3 max-w-[200px]">
             <StoreSwitcher items={stores} />
           </div>
         </div>
@@ -58,6 +58,19 @@ export const MobileHome = ({ totalRevenue, salesCount, stockCount, stores }: Mob
           <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 text-center">
             <Package className="h-6 w-6 text-purple-600 mx-auto mb-1" />
             <p className="text-xs font-medium text-purple-600">View Products</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Notice */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="flex items-start space-x-3">
+          <Store className="h-5 w-5 text-blue-600 mt-0.5" />
+          <div>
+            <h3 className="text-sm font-medium text-blue-900">Mobile Dashboard</h3>
+            <p className="text-xs text-blue-700 mt-1">
+              You're using the mobile-optimized dashboard. Switch to desktop for full admin features.
+            </p>
           </div>
         </div>
       </div>

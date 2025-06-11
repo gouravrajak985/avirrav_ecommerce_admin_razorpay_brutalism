@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Smartphone, Monitor, Tablet } from 'lucide-react';
 import { MobileDashboard } from './mobile-dashboard';
 
 interface MobileDetectorProps {
@@ -12,9 +11,6 @@ interface MobileDetectorProps {
 export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [showMobileMessage, setShowMobileMessage] = useState(false);
-  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
-  const [useMobileDashboard, setUseMobileDashboard] = useState(false);
   const [dashboardData, setDashboardData] = useState<any>(null);
 
   useEffect(() => {
@@ -23,30 +19,16 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
         const userAgent = navigator.userAgent;
         const screenWidth = window.innerWidth;
         
-        // More comprehensive mobile detection
+        // Comprehensive mobile detection
         const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
         const isTabletUA = /iPad|Android(?=.*Tablet)|Tablet/i.test(userAgent);
         const isMobileScreen = screenWidth < 768;
-        const isTabletScreen = screenWidth >= 768 && screenWidth < 1024;
         
-        let device: 'mobile' | 'tablet' | 'desktop' = 'desktop';
+        // Consider it mobile if it's a mobile device OR small screen (but not tablet)
+        const isMobileDevice = (isMobileUA && !isTabletUA) || (isMobileScreen && !isTabletUA);
         
-        if (isMobileUA && !isTabletUA) {
-          device = 'mobile';
-        } else if (isTabletUA || isTabletScreen) {
-          device = 'tablet';
-        } else if (isMobileScreen) {
-          device = 'mobile';
-        }
-        
-        setDeviceType(device);
-        setIsMobile(device === 'mobile');
+        setIsMobile(isMobileDevice);
         setIsLoading(false);
-        
-        // Only show message for mobile devices (not tablets)
-        if (device === 'mobile') {
-          setShowMobileMessage(true);
-        }
       } catch (error) {
         console.error('Error detecting device:', error);
         setIsLoading(false);
@@ -59,12 +41,12 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
     // Listen for resize events
     const handleResize = () => {
       const screenWidth = window.innerWidth;
-      const isMobileDevice = screenWidth < 768;
-      setIsMobile(isMobileDevice);
+      const userAgent = navigator.userAgent;
+      const isTabletUA = /iPad|Android(?=.*Tablet)|Tablet/i.test(userAgent);
+      const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
       
-      if (isMobileDevice && deviceType === 'mobile') {
-        setShowMobileMessage(true);
-      }
+      const isMobileDevice = (isMobileUA && !isTabletUA) || (screenWidth < 768 && !isTabletUA);
+      setIsMobile(isMobileDevice);
     };
 
     window.addEventListener('resize', handleResize);
@@ -73,23 +55,23 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
       clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
     };
-  }, [deviceType]);
+  }, []);
 
-  // Fetch dashboard data when mobile dashboard is requested
+  // Fetch dashboard data when mobile is detected and storeId is available
   useEffect(() => {
-    if (useMobileDashboard && storeId) {
+    if (isMobile && storeId && !isLoading) {
       const fetchDashboardData = async () => {
         try {
           // Fetch all required data for mobile dashboard
-          const [ordersRes, productsRes, storeRes] = await Promise.all([
+          const [ordersRes, productsRes, storesRes] = await Promise.all([
             fetch(`/api/${storeId}/orders`),
             fetch(`/api/${storeId}/products`),
-            fetch(`/api/stores/${storeId}`)
+            fetch('/api/stores') // Fetch all stores for store switcher
           ]);
 
           const orders = await ordersRes.json();
           const products = await productsRes.json();
-          const store = await storeRes.json();
+          const allStores = await storesRes.json();
 
           // Format data for mobile components
           const formattedOrders = orders.map((order: any) => ({
@@ -118,10 +100,23 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
             stockQuantity: product.stockQuantity || 0,
           }));
 
+          // Format stores for store switcher
+          const formattedStores = Array.isArray(allStores) ? allStores.map((store: any) => ({
+            id: store.id,
+            name: store.name,
+          })) : [];
+
+          // Find current store
+          const currentStore = formattedStores.find((store: any) => store.id === storeId) || {
+            id: storeId,
+            name: 'Current Store'
+          };
+
           setDashboardData({
             orders: formattedOrders,
             products: formattedProducts,
-            store,
+            stores: formattedStores,
+            store: currentStore,
             totalRevenue: `₹${formattedOrders.reduce((total: number, order: any) => 
               total + parseFloat(order.totalPrice.replace('₹', '')), 0).toFixed(2)}`,
             salesCount: formattedOrders.filter((order: any) => order.isPaid).length,
@@ -130,12 +125,22 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
           });
         } catch (error) {
           console.error('Error fetching dashboard data:', error);
+          // Set empty data to prevent infinite loading
+          setDashboardData({
+            orders: [],
+            products: [],
+            stores: [],
+            store: { id: storeId, name: 'Store' },
+            totalRevenue: '₹0.00',
+            salesCount: 0,
+            stockCount: 0,
+          });
         }
       };
 
       fetchDashboardData();
     }
-  }, [useMobileDashboard, storeId]);
+  }, [isMobile, storeId, isLoading]);
 
   if (isLoading) {
     return (
@@ -148,12 +153,12 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
     );
   }
 
-  // Show mobile dashboard if user chose to use it
-  if (useMobileDashboard && dashboardData && storeId) {
+  // Automatically show mobile dashboard if on mobile device
+  if (isMobile && dashboardData && storeId) {
     return (
       <MobileDashboard
         storeId={storeId}
-        stores={[]} // Will be passed from parent
+        stores={dashboardData.stores}
         totalRevenue={dashboardData.totalRevenue}
         salesCount={dashboardData.salesCount}
         stockCount={dashboardData.stockCount}
@@ -164,49 +169,6 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
     );
   }
 
-  if (showMobileMessage && isMobile) {
-    const DeviceIcon = deviceType === 'mobile' ? Smartphone : deviceType === 'tablet' ? Tablet : Monitor;
-    
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-xl p-6 shadow-xl border border-gray-200 max-w-sm w-full text-center">
-          <div className="mb-6">
-            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <DeviceIcon className="w-10 h-10 text-blue-600" />
-            </div>
-            <h1 className="text-xl font-bold text-gray-900 mb-2">Mobile Dashboard</h1>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Choose your preferred mobile experience for managing your store.
-            </p>
-          </div>
-          
-          <div className="space-y-3">
-            <button
-              onClick={() => {
-                setUseMobileDashboard(true);
-                setShowMobileMessage(false);
-              }}
-              className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
-            >
-              Use Mobile Dashboard
-            </button>
-            
-            <button
-              onClick={() => setShowMobileMessage(false)}
-              className="w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
-            >
-              Continue to Desktop View
-            </button>
-            
-            <div className="text-xs text-gray-500 space-y-1 mt-4">
-              <p>📱 Mobile: Optimized navigation & read-only</p>
-              <p>🖥️ Desktop: Full admin features</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  // Show desktop version for non-mobile devices or when mobile data isn't ready
   return <>{children}</>;
 };
