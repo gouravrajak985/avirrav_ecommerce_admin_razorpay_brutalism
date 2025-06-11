@@ -77,7 +77,7 @@ export const AdminSidebar = () => {
   ];
 
   return (
-    <div className="h-full bg-white overflow-y-auto">
+    <div className="h-full bg-white">
       <nav className="p-4 space-y-1">
         {routes.map((route) => {
           const Icon = route.icon;
