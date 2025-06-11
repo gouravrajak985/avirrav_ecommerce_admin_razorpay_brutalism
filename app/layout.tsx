@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Pugly Dashboard – Manage Boldly',
-  description: 'Admin Dashboard',
+  description: 'Launch and manage your eCommerce store in minutes. Sell products, track orders, and grow your brand — no coding, no commitments',
   viewport: {
     width: 'device-width',
     initialScale: 1,
