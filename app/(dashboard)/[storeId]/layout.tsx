@@ -36,7 +36,7 @@ export default async function DashboardLayout({
   });
 
   return (
-    <MobileDetector storeId={params.storeId}>
+    <MobileDetector stores={stores} storeId={params.storeId}>
       <div className="min-h-screen flex flex-col bg-gray-900">
         {/* Top Section - Shopify-style dark header */}
         <div className="h-14 flex-shrink-0 relative z-50">

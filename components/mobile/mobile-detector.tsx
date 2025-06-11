@@ -2,17 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import { MobileDashboard } from './mobile-dashboard';
+import prismadb from '@/lib/prismadb';
 
 interface MobileDetectorProps {
   children: React.ReactNode;
   storeId?: string;
+  stores: any[];
 }
 
-export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
+export const MobileDetector = ({ children, storeId, stores }: MobileDetectorProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState<any>(null);
-
+  console.log('MobileDetector initialized with storeId:', storeId);
   useEffect(() => {
     const checkDevice = () => {
       try {
@@ -71,23 +73,19 @@ export const MobileDetector = ({ children, storeId }: MobileDetectorProps) => {
       setIsLoading(true);
       
       // Fetch all required data for mobile dashboard
-      const [ordersRes, productsRes, storesRes] = await Promise.all([
+      const [ordersRes, productsRes] = await Promise.all([
         fetch(`/api/${storeId}/orders`).catch(() => ({ ok: false, json: () => Promise.resolve([]) })),
         fetch(`/api/${storeId}/products`).catch(() => ({ ok: false, json: () => Promise.resolve([]) })),
-        fetch('/api/stores').catch(() => ({ ok: false, json: () => Promise.resolve([]) }))
       ]);
-      console.log('Orders Response:', ordersRes);
-      console.log('Products Response:', productsRes);
-      console.log('Stores Response:', storesRes);
       const orders = ordersRes.ok ? await ordersRes.json() : [];
       const products = productsRes.ok ? await productsRes.json() : [];
-      const allStores = storesRes.ok ? await storesRes.json() : [];
+
 
       // Ensure we have arrays
       const ordersArray = Array.isArray(orders) ? orders : [];
       const productsArray = Array.isArray(products) ? products : [];
-      const storesArray = Array.isArray(allStores) ? allStores : [];
-
+      const storesArray = Array.isArray(stores) ? stores : [];
+      console.log("Stores Array:", storesArray);
       // Format data for mobile components
       const formattedOrders = ordersArray.map((order: any) => {
         const orderItems = order.orderItems || [];
