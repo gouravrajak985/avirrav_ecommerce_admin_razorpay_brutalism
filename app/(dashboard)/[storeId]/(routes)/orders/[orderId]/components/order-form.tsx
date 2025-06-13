@@ -119,7 +119,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
   const getInitialValues = () => {
     if (initialData) {
       const customerData = initialData.customerId ? customers.find(c => c.id === initialData.customerId) : null;
-      let address = { addressLine1: '', addressLine2: '', city: '', state: '', postalCode: '', country: 'United States' };
+      let address = { addressLine1: '', addressLine2: '', city: '', state: '', postalCode: '', country: 'India' };
       
       if (customerData?.shippingAddress) {
         try {
@@ -145,7 +145,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
         city: address.city || '',
         state: address.state || '',
         postalCode: address.postalCode || '',
-        country: address.country || 'United States',
+        country: address.country || 'India',
         productIds: initialData.orderItems.map(item => item.productId),
         quantities,
         paymentStatus: initialData.paymentStatus as any,

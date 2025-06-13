@@ -168,7 +168,6 @@ export async function POST(
             },
           },
         });
-
         // Update stock quantities
         for (const product of products) {
           const quantityOrdered = productQuantityMap[product.id] || 0;
