@@ -47,7 +47,7 @@ const formSchema = z.object({
   country: z.string().min(1, "Country is required"),
   productIds: z.array(z.string()).min(1, "At least one product must be selected"),
   quantities: z.record(z.string(), z.number().min(1)),
-  paymentStatus: z.enum(['paid', 'pending', 'partial']),
+  paymentStatus: z.enum(['paid', 'pending', 'partial', 'cash_on_delivery']),
   paymentMethod: z.enum(['cash', 'credit_card', 'upi', 'bank_transfer', 'other']),
   orderStatus: z.enum(['draft', 'confirmed', 'shipped', 'delivered', 'cancelled', 'returned']),
   isPaid: z.boolean().default(false),
@@ -69,6 +69,7 @@ const PAYMENT_STATUSES = [
   { label: 'Paid', value: 'paid' },
   { label: 'Pending', value: 'pending' },
   { label: 'Partial', value: 'partial' },
+  { label: 'Cash on Delivery', value: 'cash_on_delivery' },
 ];
 
 const PAYMENT_METHODS = [
