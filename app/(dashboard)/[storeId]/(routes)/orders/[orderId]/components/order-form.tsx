@@ -199,8 +199,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({
           phone: data.phone,
           email: data.email || '',
           address: data.addressLine1,
-          paymentStatus: 'pending', // Default value for new orders
-          paymentMethod: 'cash', // Default value for new orders
+          paymentStatus: 'PENDING', // Default value for new orders
+          paymentMethod: 'PENDING', // Default value for new orders
           isPaid: false, // Default value for new orders
         };
 

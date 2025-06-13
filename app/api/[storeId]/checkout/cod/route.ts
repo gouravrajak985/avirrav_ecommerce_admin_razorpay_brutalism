@@ -137,12 +137,13 @@ export async function POST(
           data: {
             storeId: params.storeId,
             customerId: customer?.id,
-            isPaid: false,
+            isPaid: true,
             phone,
             email: email || '',
             address: addressLine1,
-            paymentMethod: 'cash',
-            paymentStatus: 'cod',
+            paymentMethod: 'CASH ON DELIVERY',
+            paymentStatus: 'PAID',
+            orderStatus: 'confirmed',
             orderItems: {
               create: productIds.map((productId: string) => ({
                 product: {
