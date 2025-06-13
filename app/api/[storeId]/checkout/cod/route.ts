@@ -1,96 +1,191 @@
 import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
   try {
-    const body = await req.json();
-    const { 
-      items,
-      customer,
-      address,
+    const {
+      productIds,
+      fullName,
+      email,
       phone,
-      email
-    } = body;
+      addressLine1,
+      addressLine2,
+      city,
+      state,
+      postalCode,
+      country
+    } = await req.json();
 
-    if (!items || items.length === 0) {
-      return new NextResponse("Cart items are required", { status: 400 });
+    if (!productIds || productIds.length === 0) {
+      console.error('Product ids are required');
+      return new NextResponse("Product ids are required", { status: 400 });
     }
 
-    if (!customer) {
-      return new NextResponse("Customer information is required", { status: 400 });
-    }
-
-    const storeId = params.storeId;
-    
+    // Get store details including Razorpay credentials
     const store = await prismadb.store.findFirst({
       where: {
-        id: storeId,
+        id: params.storeId
       }
     });
 
-    if (!store) {
-      return new NextResponse("Store not found", { status: 404 });
+    if (!store || !store.razorpayKeyId || !store.razorpayKeySecret) {
+      return new NextResponse("Store Razorpay credentials not found", { status: 400 });
     }
 
-    // Create or get existing customer
-    const existingCustomer = await prismadb.customer.findFirst({
+    // Check stock availability for all products
+    const products = await prismadb.product.findMany({
       where: {
-        email: customer.email,
-        storeId: storeId,
+        id: {
+          in: productIds
+        }
       }
     });
 
-    let customerRecord = existingCustomer;
+    // Create a map of product quantities
+    const productQuantityMap = productIds.reduce((acc: { [key: string]: number }, id: string) => {
+      acc[id] = (acc[id] || 0) + 1;
+      return acc;
+    }, {});
 
-    if (!existingCustomer) {
-      customerRecord = await prismadb.customer.create({
-        data: {
-          fullName: customer.name,
-          email: customer.email,
-          phone: customer.phone,
-          shippingAddress: customer.address,
-          storeId: storeId,
+    // Check if any product is out of stock
+    for (const product of products) {
+      const requestedQuantity = productQuantityMap[product.id] || 0;
+      if (!product.sellWhenOutOfStock && product.stockQuantity < requestedQuantity) {
+        return new NextResponse(`Product ${product.name} is out of stock`, { status: 400 });
+      }
+    }
+
+    try {
+      // Check if customer exists using findUnique with composite key
+      let customer = await prismadb.customer.findUnique({
+        where: {
+          email: email || ''
         }
       });
-    }
-
-    // Create order with COD payment status
-    const order = await prismadb.order.create({
-      data: {
-        storeId,
-        customerId: customer?.id,
-        isPaid: false,
-        phone: phone || customer.phone,
-        email: email || customer.email,
-        address: address || customer.address,
-        paymentStatus: "cash_on_delivery",
-        paymentMethod: "cod",
-        orderStatus: "confirmed",
-        orderItems: {
-          create: items.map((item: any) => ({
-            product: {
-              connect: {
-                id: item.id
-              }
-            },
-            quantity: item.quantity
-          }))
-        }
+      if (customer) {
+        // Update existing customer
+        customer = await prismadb.customer.update({
+          where: {
+            email: email || ''
+          },
+          data: {
+            fullName,
+            phone,
+            shippingAddress: JSON.stringify({
+              addressLine1,
+              addressLine2,
+              city,
+              state,
+              postalCode,
+              country
+            })
+          }
+        });
+      } else {
+        // Create new customer with upsert to handle race conditions
+        customer = await prismadb.customer.upsert({
+          where: {
+            email: email || ''
+          },
+          update: {
+            fullName,
+            phone,
+            shippingAddress: JSON.stringify({
+              addressLine1,
+              addressLine2,
+              city,
+              state,
+              postalCode,
+              country
+            })
+          },
+          create: {
+            storeId: params.storeId,
+            fullName,
+            email: email || '',
+            phone,
+            shippingAddress: JSON.stringify({
+              addressLine1,
+              addressLine2,
+              city,
+              state,
+              postalCode,
+              country
+            })
+          }
+        });
       }
-    });
 
-    return NextResponse.json({ 
-      orderId: order.id,
-      message: "Order placed successfully with Cash on Delivery"
-    }, {
-      status: 200
-    });
 
-  } catch (error) {
-    console.log('[CHECKOUT_COD_ERROR]', error);
-    return new NextResponse("Internal error", { status: 500 });
+      // Create order and update stock quantities in a transaction
+      const order = await prismadb.$transaction(async (tx) => {
+        // Create the order
+        const newOrder = await tx.order.create({
+          data: {
+            storeId: params.storeId,
+            customerId: customer?.id,
+            isPaid: false,
+            phone,
+            email: email || '',
+            address: addressLine1,
+            paymentMethod: 'cash',
+            paymentStatus: 'cod',
+            orderItems: {
+              create: productIds.map((productId: string) => ({
+                product: {
+                  connect: {
+                    id: productId
+                  }
+                }
+              }))
+            },
+          },
+        });
+        // Update stock quantities
+        for (const product of products) {
+          const quantityOrdered = productQuantityMap[product.id] || 0;
+          if (!product.sellWhenOutOfStock) {
+            await tx.product.update({
+              where: { id: product.id },
+              data: {
+                stockQuantity: {
+                  decrement: quantityOrdered
+                }
+              }
+            });
+          }
+        }
+
+        return newOrder;
+      });
+
+      return NextResponse.json({
+        orderId: order.id,
+        message: "Order placed successfully with Cash on Delivery"
+      }, {
+        status: 200,
+        headers: corsHeaders
+      });
+
+      } catch (error) {
+        console.log('[CHECKOUT_COD_ERROR]', error);
+        return new NextResponse("Internal error", { status: 500 });
+      }
+    } catch (error) {
+      console.log('[CHECKOUT_COD_ERROR]', error);
+      return new NextResponse("Internal error", { status: 500 });
+    }
   }
-}
