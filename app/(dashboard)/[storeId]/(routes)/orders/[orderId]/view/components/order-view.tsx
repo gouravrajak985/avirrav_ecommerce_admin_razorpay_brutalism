@@ -8,12 +8,44 @@ import Image from "next/image";
 import { jsPDF } from "jspdf";
 import { formatter } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface OrderViewProps {
   data: any;
 }
 
+interface ProductDetails {
+  id: string;
+  name: string;
+  images: { url: string }[];
+  color: { name: string; value: string } | null;
+  size: { name: string; value: string } | null;
+  price: number;
+}
+
 export const OrderView: React.FC<OrderViewProps> = ({ data }) => {
+  const [productDetails, setProductDetails] = useState<Record<string, ProductDetails>>({});
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      const details: Record<string, ProductDetails> = {};
+      
+      for (const item of data.orderItems) {
+        try {
+          const response = await axios.get(`/api/${data.storeId}/products/${item.productId}`);
+          details[item.productId] = response.data;
+        } catch (error) {
+          console.error(`Error fetching product details for ${item.productId}:`, error);
+        }
+      }
+      
+      setProductDetails(details);
+    };
+
+    fetchProductDetails();
+  }, [data.orderItems, data.storeId]);
+
   const generatePDF = () => {
     const doc = new jsPDF();
 
@@ -138,64 +170,67 @@ export const OrderView: React.FC<OrderViewProps> = ({ data }) => {
         </CardHeader>
         <CardContent className="pt-4">
           <div className="space-y-4">
-            {data.orderItems.map((item: any, index: number) => (
-              <div key={item.id} className={`flex items-center space-x-4 p-4 rounded-lg border border-gray-100 ${index !== data.orderItems.length - 1 ? 'mb-4' : ''}`}>
-                {/* Product Image */}
-                <div className="flex-shrink-0">
-                  {item.product.images && item.product.images.length > 0 ? (
-                    <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-gray-200">
-                      <Image
-                        src={item.product.images[0].url}
-                        alt={item.product.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                      <Package className="h-6 w-6 text-gray-400" />
-                    </div>
-                  )}
-                </div>
-
-                {/* Product Details */}
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-medium text-gray-900 truncate">{item.product.name}</h4>
-                  <div className="flex items-center space-x-4 mt-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-xs text-gray-500">Color:</span>
-                      <div className="flex items-center space-x-1">
-                        <div
-                          className="w-3 h-3 rounded-full border border-gray-300"
-                          style={{ backgroundColor: item.product.color?.value || '#000000' }}
+            {data.orderItems.map((item: any, index: number) => {
+              const product = productDetails[item.productId];
+              return (
+                <div key={item.id} className={`flex items-center space-x-4 p-4 rounded-lg border border-gray-100 ${index !== data.orderItems.length - 1 ? 'mb-4' : ''}`}>
+                  {/* Product Image */}
+                  <div className="flex-shrink-0">
+                    {product?.images && product.images.length > 0 ? (
+                      <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-gray-200">
+                        <Image
+                          src={product.images[0].url}
+                          alt={product.name}
+                          fill
+                          className="object-cover"
                         />
-                        <span className="text-xs text-gray-600">{item.product.color?.name || 'N/A'}</span>
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                        <Package className="h-6 w-6 text-gray-400" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Product Details */}
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-medium text-gray-900 truncate">{product?.name || 'Product not found'}</h4>
+                    <div className="flex items-center space-x-4 mt-1">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs text-gray-500">Color:</span>
+                        <div className="flex items-center space-x-1">
+                          <div
+                            className="w-3 h-3 rounded-full border border-gray-300"
+                            style={{ backgroundColor: product?.color?.value || '#000000' }}
+                          />
+                          <span className="text-xs text-gray-600">{product?.color?.name || 'N/A'}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <span className="text-xs text-gray-500">Size:</span>
+                        <span className="text-xs text-gray-600">{product?.size?.name || 'N/A'}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <span className="text-xs text-gray-500">Qty:</span>
+                        <span className="text-xs text-gray-600">{item.quantity}</span>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <span className="text-xs text-gray-500">Size:</span>
-                      <span className="text-xs text-gray-600">{item.product.size?.name || 'N/A'}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <span className="text-xs text-gray-500">Qty:</span>
-                      <span className="text-xs text-gray-600">{item.quantity}</span>
-                    </div>
+                  </div>
+
+                  {/* Price */}
+                  <div className="text-right">
+                    <p className="text-sm font-semibold text-gray-900">
+                      {formatter.format(product?.price || 0)}
+                    </p>
+                    {item.quantity > 1 && (
+                      <p className="text-xs text-gray-500">
+                        {formatter.format((product?.price || 0) * item.quantity)} total
+                      </p>
+                    )}
                   </div>
                 </div>
-
-                {/* Price */}
-                <div className="text-right">
-                  <p className="text-sm font-semibold text-gray-900">
-                    {formatter.format(item.product.price)}
-                  </p>
-                  {item.quantity > 1 && (
-                    <p className="text-xs text-gray-500">
-                      {formatter.format(item.product.price * item.quantity)} total
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
